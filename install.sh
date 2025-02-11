@@ -15,8 +15,20 @@ fi
 echo "Installing required packages, please enter your password"
 sudo echo
 packagelist=$(apt list)
+echo -e "Installing figlet"
+if [[ ! $packagelist == *"figlet/"* ]]; then
+    sudo apt install figlet -y
+    if [ $? -ne 0 ]; then
+        echo "FAILED"
+        echo "Please install figlet manually"
+    else
+        echo "SUCCESS"
+    fi
+else
+    echo "figlet is already installed"
+fi
 echo -e "Installing lolcat"
-if [[ ! $packagelist == *"lolcat/"*]]; then
+if [[ ! $packagelist == *"lolcat/"* ]]; then
     sudo apt install lolcat -y
     if [ $? -ne 0 ]; then
         echo "FAILED"
@@ -28,7 +40,7 @@ else
     echo "lolcat is already installed"
 fi
 echo -e "Installing sed"
-if [[ ! $packagelist == *"sed/"*]]; then
+if [[ ! $packagelist == *"sed/"* ]]; then
     sudo apt install sed -y
     if [ $? -ne 0 ]; then
         echo "FAILED"
@@ -40,7 +52,7 @@ else
     echo "sed is already installed"
 fi
 echo -e "Installing x11-xserver-utils"
-if [[ ! $packagelist == *"x11-xserver-utils/"*]]; then
+if [[ ! $packagelist == *"x11-xserver-utils/"* ]]; then
     sudo apt install x11-xserver-utils -y
     if [ $? -ne 0 ]; then
         echo "FAILED"
