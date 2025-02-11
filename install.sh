@@ -65,8 +65,11 @@ else
 fi
 
 # Install the custom commands
-sudo mkdir /usr/custom_paths
-sudo cp -r ./commands /usr/custom_paths/
+if [ ! -d /usr/custom_paths ]; then
+    sudo mkdir /usr/custom_paths
+fi
+sudo cp -r ./commands/* /usr/custom_paths/
+sudo chmod +x /usr/custom_paths/*
 
 # Modify .bashrc to make commands part of PATH (accessible from any directory)
 if [[ ! $(cat ~/.bashrc) == *"/usr/custom_paths/"* ]]; then
