@@ -1,0 +1,33 @@
+AddPlymouth(){
+    read -p "Input the directory that the .plymouth file is located in: " plydir
+    plybn=$(basename $plydir)
+    plyname="$plybn/$plybn.plymouth"
+    sudo cp -R $plydir /usr/share/plymouth/themes/
+    sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/$plyname 100
+}
+
+OpenConfig(){
+    sudo update-alternatives --config default.plymouth 
+    sudo update-initramfs -u
+}
+
+
+case $1 in               
+    1)
+        AddPlymouth
+        exit;;
+    2)
+        OpenConfig
+        exit;;
+esac
+
+# If the user did not provide a argument after the command
+read -p "Do you want to add a new plymouth file or set a plymouth? [1/2] : " uinput
+case $uinput in                      
+    1)
+        AddPlymouth
+        exit;;
+    2)
+        OpenConfig
+        exit;;
+esac

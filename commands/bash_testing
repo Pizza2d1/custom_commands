@@ -1,0 +1,97 @@
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+cpu=$(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g' | sed -r 's/ with Radeon Graphics//')
+ram_num=$(cat /proc/meminfo | grep "MemTotal" | sed -r 's/MemTotal:       //' | sed -r 's/ kB//')
+ram=$(cat /proc/meminfo | grep "MemTotal" | sed -r 's/MemTotal:       //')
+simplified_ram=$(echo " ("$(($ram_num/1000000))" GB)")
+resolution=$(xrandr | sed 's/^.*current //' | sed 's/, maximum 32767 x 32767//' | head -n 1)
+#ffree_storage=$(df / | grep -h 2 | awk '/dev/nvme0n1p2 {print $4}')
+used_storage=$(df / | grep -h 2 | awk '/dev/nvme0n1p2 {print $3}')
+total_storage=$(df / | grep -h 2 | awk '/dev/nvme0n1p2 {print $2}')
+free_storage=$(($total_storage-$used_storage))
+
+
+f1="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢴⠊⣉⣉⠉⠉⠉⠙⢦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀ SPECIFICATIONS:"
+f2="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡞⠐⢿⣿⣿⣦⡀⠀⠀⠀⠱⢄⠀⠀⠀⠀⡄⠶⠛⠙⠛⠉⠒⠤⡄⠀⠀⠀⠀⠀⠀⠀ ⠀⠀ "
+f3="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠃⠀⠀⠀⢀⣈⣅⣤⡤⠶⠒⠛⠛⠳⢯⡷⠶⢶⣾⣷⣆⠀⠀⠀⠈⢧⡀⠀⠀⠀⠀    ⠀CPU: "$cpu
+f4="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡶⠶⠚⠛⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠘⢷⡄⠀⠉⠉⠙⠷⠀⠀⠀⠀⢷⠀⠀⠀ ⠀⠀Ram: "$ram$simplified_ram
+f5="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡾⠛⠀⠀⠀⠀⠀⠀⠀⡀⠀⠄⠃⠀⠀⠄⠀⠀⠻⢧⡀⠀⠀⠀⠀⠀⠀⢀⣿⠀⠀ ⠀⠀⠀Display Resolution: "$resolution
+f6="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠁⠀⠀⠀⠀⠂⠈⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠄⠀⠀⠉⠳⢦⣄⡀⠀⠀⢰⣼⠀⠀⠀⠀⠀ Storage Space Used: "$used_storage"/"$total_storage
+f7="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⠀⡐⠀⠀⠁⠀⠄⠀⠀⢀⠈⠀⠀⠄⠀⠀⡀⠀⠀⠂⢀⠀⠀⠉⠉⠛⠳⠛⠻⣄⠀⠀⠀⠀⠀Usable Storage: "$(($free_storage/1000000))" GB"
+f8="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⡀⠠⠀⠁⠠⠀⠀⠀⠀⠀⢀⠀⠀⠀⠂⠀⠀⠠⠀⢀⠀⠂⡀⠐⠀⠤⢠⡁⠚⢷⣄⠀⠀⠀⠀⠀ "
+f9="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⢀⠀⠐⠀⠀⠀⠀⠄⠀⠀⠀⠀⠂⠀⡀⠂⠠⠐⠀⠄⠂⢀⠊⠀⣃⢦⢡⠉⠄⠛⣧⡀⠀⠀⠀ "
+f10="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇⠀⠈⠀⠀⠀⠀⠀⢀⠀⠀⠄⠀⠁⡀⠐⡀⣀⠁⢠⢡⡌⣀⢆⡄⡌⡰⣈⠆⣻⠜⡂⠑⠬⢿⡆⠀⠀"
+f11="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⢃⣀⠀⠠⠀⠀⠄⠀⡀⠠⣀⢐⡈⣠⣄⢦⡵⢴⠮⠿⢶⠿⣾⣿⣶⣝⣷⣑⢪⡕⣏⡒⠈⢈⣹⣧⠀⠀"
+f12="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣇⠀⢻⣿⣿⣷⣿⡶⠿⠾⠓⠚⠋⠉⠁⠈⣀⠤⣄⣆⢳⡬⡶⢤⢠⢉⠋⠻⣽⢦⣹⣿⢡⠂⠀⢼⣿⠀⠀"
+f13="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣆⠀⠀⠀⠀⠀⠀⠀⠀⣀⢶⣰⠾⣶⣷⡾⢿⣾⣸⢷⣹⢿⣿⢷⡏⣰⠀⡀⠰⠈⠱⠀⢀⠸⣾⢿⠀⠀"
+f14="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢶⣦⣜⣦⣻⣞⣷⣯⣶⣷⣿⣷⣿⣾⣟⣾⡝⣧⢟⡾⣿⣿⣿⢧⡝⣦⣒⢤⣀⣦⣠⢾⣿⡟⠀⠀"
+f15="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣽⣾⣹⢯⣝⣮⢻⡜⣿⣿⣿⣿⣳⣯⣾⣿⣿⢿⣯⣿⠇⠀⠀"
+f16="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣇⢏⡿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣽⣻⠶⣭⡗⣞⢧⣿⢿⣿⣿⣿⣿⣿⣿⣟⣿⡏⠀⠀⠀"
+f17="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣎⠜⣧⡻⣽⢿⣿⣿⣿⣿⣽⣿⣎⣿⣦⣽⡞⣮⢼⣛⢾⡹⢯⣿⣿⣳⣿⠇⠀⠀⠀⠀"
+f18="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣾⣰⢻⣭⣛⢿⣯⢿⣿⣟⣯⣟⣼⡷⣯⣝⢮⣳⠻⣬⣛⣿⣼⣿⣽⣿⠀⠀⠀⠀⠀"
+f19="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠎⠠⠙⣯⠓⢮⠛⣾⡹⣷⡻⣯⣟⣾⡷⣟⡷⣯⢯⣷⣻⡷⣿⣾⡿⣟⣿⢸⡀⠀⠀⠀⠀"
+f20="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣴⡿⠁⠀⠁⠰⣯⠈⠤⡙⢤⠳⣵⣟⡿⣾⣻⣽⣟⣿⣿⣿⣿⣯⣿⣿⣯⣿⡻⢾⡉⢇⠀⠀⠀⠀"
+f21="⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⢨⣴⠋⠀⠀⠀⠀⠀⣿⠀⡄⠑⢢⢱⡏⣾⣽⢳⡝⣿⣿⣿⣿⣿⣿⣿⣿⣯⣷⣯⡝⢻⡄⢩⢻⣦⠀⠀"
+f22="⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣀⣴⡟⠉⠀⠠⠁⠀⠀⠀⠘⢷⣄⠑⢢⠙⣼⢣⡽⣻⢷⣿⣿⣿⣿⣿⣿⣿⣿⣟⣷⣭⢳⠽⢀⠡⢈⠙⢧⠀"
+f23="⠀⠀⠀⠀⢀⣠⡶⠞⡉⠆⡍⡒⠠⢀⣠⣆⠀⠀⠀⠀⠀⠀⠙⠷⣦⣑⠮⣳⢟⣽⣻⣷⣯⣿⣿⣿⣿⣿⣿⣿⣿⣞⠯⠊⢄⠘⡠⠈⠊⡷"
+f24="⠀⠀⠀⣤⠟⡉⠐⡀⢂⡱⢊⣥⣿⢿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠾⢷⣿⣼⣷⣟⣿⣿⣿⡿⠿⠛⠋⠌⠤⣉⠂⠄⠡⢀⠁⡗"
+f25="⠀⣠⡊⢀⢂⠤⣱⣸⣿⣿⣝⠨⣁⣾⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠁⠂⠀⠄"
+
+
+RED='\033[0;31m'
+k1="      ██    ██    ██"
+k2="      ██    ██    ██"
+k3="      ▓▓    ▓▓    ▓▓"
+k4="      ▓▓    ▓▓    ▓▓"
+k5="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      CPU: "$cpu
+k6="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      Ram: "$ram$simplified_ram
+k7="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      Display Resolution: "$resolution
+k8="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      Storage Space Used: "$used_storage"/"$total_storage
+k9="▓▓          ▓▓          ▓▓      Usable Storage: "$(($free_storage/1000000))" GB"
+ka="▓▓          ▓▓          ▓▓"
+kb="▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒"
+kc="▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒"
+kd="            ▓▓"
+ke="            ▓▓"
+kf="    ██▓▓▒▒▒▒▓▓▒▒▒▒▓▓██"
+kg="    ██▓▓▒▒▒▒▓▓▒▒▒▒▓▓██"
+kh="          ▓▓  ▓▓"
+ki="          ▓▓  ▓▓"
+kj="        ▓▓      ▓▓"
+kk="        ▓▓      ▓▓"
+kl="          ▓▓▓▓▓▓"
+km="          ▓▓▓▓▓▓"
+
+
+printf ${RED}
+figlet "Praise The Code"
+echo -e $k1$'\n'$k2$'\n'$k3$'\n'$k4$'\n'$k5$'\n'$k6$'\n'$k7$'\n'$k8$'\n'$k9$'\n'$ka$'\n'$kb$'\n'$kc$'\n'$kd$'\n'$ke$'\n'$kf$'\n'$kg$'\n'$kh$'\n'$ki$'\n'$kj$'\n'$kk$'\n'$kl$'\n'$km
+printf "${STOP}"
+
+######################################################################################
+## Will randomly decide which fetch will be used, notes with double ## are NOT part of the code and should stay as notes, if you want to use this then you should delete
+##-The previous few lines after the ACSII image
+#BINARY=2
+#T=1
+#number=$RANDOM
+#let "number %= $BINARY"
+##  Note that    let "number >>= 14"    gives a better random distribution
+##+ (right shifts out everything except last binary digit).
+#if [ "$number" -eq $T ]
+#then
+#  printf ${RED}
+#  figlet "Praise The Code"
+#  echo -e $k1$'\n'$k2$'\n'$k3$'\n'$k4$'\n'$k5$'\n'$k6$'\n'$k7$'\n'$k8$'\n'$k9$'\n'$ka$'\n'$kb$'\n'$kc$'\n'$kd$'\n'$ke$'\n'$kf$'\n'$kg$'\n'$kh$'\n'$ki$'\n'$kj$'\n'$kk$'\n'$kl$'\n'$km
+#  printf "${STOP}"
+#else
+#  figlet "Froggy Mode" | lolcat
+#  echo -e $f1$'\n'$f2$'\n'$f3$'\n'$f4$'\n'$f5$'\n'$f6$'\n'$f7$'\n'$f8$'\n'$f9$'\n'$f10$'\n'$f11$'\n'$f12$'\n'$f13$'\n'$f14$'\n'$f15$'\n'$f16$'\n'$f17$'\n'$f18$'\n'$f19$'\n'$f20$'\n'$f21$'\n'$f22$'\n'$f23$'\n'$f24$'\n'$f25 | lolcat
+#fi
+
+## don't put duplicate lines or lines starting with space in the history.
+## See bash(1) for more options
+#####################################################################################################
+
