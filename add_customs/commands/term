@@ -1,0 +1,83 @@
+OS=$(grep -E "^PRETTY_NAME=" /etc/os-release | sed "s/PRETTY_NAME=//")
+cpu=$(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g' | sed -r 's/ with Radeon Graphics//')
+ram_num=$(cat /proc/meminfo | grep "MemTotal" | sed -r 's/MemTotal:       //' | sed -r 's/ kB//')
+ram=$(cat /proc/meminfo | grep "MemTotal" | sed -r 's/MemTotal:       //')
+simplified_ram=$(echo " ("$(($ram_num/1000000))" GB)")
+resolution=$(xrandr | sed 's/^.*current //' | sed 's/, maximum 32767 x 32767//' | head -n 1)
+#ffree_storage=$(df / | grep -h 2 | awk '/dev/nvme0n1p2 {print $4}')
+used_storage=$(df / | grep -h 2 | awk '/dev/nvme0n1p2 {print $3}')
+total_storage=$(df / | grep -h 2 | awk '/dev/nvme0n1p2 {print $2}')
+free_storage=$(($total_storage-$used_storage))
+perc=$(echo "scale=3; $used_storage / $total_storage * 100" | bc)
+percent_storage=$(echo " (${perc:0:4}%)")
+DE=$(echo $XDG_CURRENT_DESKTOP | sed "s/^.*://")
+system_runtime=$(uptime -p | sed 's/up //')
+
+# FONTS #
+Fontreset='\033[0m'
+Bold='\033[1m'
+
+Red='\033[0;31m'
+Lred='\033[0m\e[38;5;196m'
+Lgreen='\033[0m\e[92m'
+Orange='\033[0m\e[38;5;208m'
+Yellow='\033[0m\e[38;5;226m'
+Lblue='\033[0m\e[34m'
+Purple='\033[0m\e[38;5;92m'
+Pink='\033[0m\e[38;5;198m'
+Cyan='\033[0m\e[36m'
+
+
+if [[ $1 == 'test' ]]; then
+    k1="      ██    ██    ██"
+    k2="      ██    ██    ██"
+    k3="      ▓▓    ▓▓    ▓▓" #\033[1m  \033[0m  \033[0;31m EXPLAINED:    \033[1m  will bolden the letters after itself, \033[0m  will end boldening BUT stops red text, so \033[0;31m sets text back to red color
+    k4="      ▓▓    ▓▓    ▓▓            $Lred$ICON_ubuntu$Bold OS Version:           $Lred $OS $Red"
+    k5="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Pink$ICON_chip$Bold CPU:                  $Pink $cpu $Red"
+    k6="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Purple$ICON_chip2$Bold Ram:                  $Purple $ram$simplified_ram $Red"
+    k7="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Lblue$ICON_monitor$Bold Resolution:           $Lblue $resolution $Red"
+    k8="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Cyan$ICON_folder$Bold Storage Space:        $Cyan $(($used_storage/1000000))/$(($total_storage/1000000)) GB$percent_storage $Red"
+    k9="▓▓          ▓▓          ▓▓      $Lgreen$ICON_folderplus$Bold Usable Storage:       $Lgreen $(($free_storage/1000000)) GB $Red"
+    ka="▓▓          ▓▓          ▓▓      $Yellow$ICON_terminal$Bold Desktop Environment:  $Yellow $DE $Red"
+    kb="▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒      $Orange$ICON_clock2$Bold System Uptime:        $Orange $system_runtime $Red"
+    kc="▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒"
+    kd="            ▓▓"
+    ke="            ▓▓"
+    kf="    ██▓▓▒▒▒▒▓▓▒▒▒▒▓▓██"
+    kg="    ██▓▓▒▒▒▒▓▓▒▒▒▒▓▓██"
+    kh="          ▓▓  ▓▓"
+    ki="          ▓▓  ▓▓"
+    kj="        ▓▓      ▓▓"
+    kk="        ▓▓      ▓▓"
+    kl="          ▓▓▓▓▓▓"
+    km="          ▓▓▓▓▓▓"
+else
+    k1="      ██    ██    ██"
+    k2="      ██    ██    ██"
+    k3="      ▓▓    ▓▓    ▓▓" #\033[1m  \033[0m  \033[0;31m EXPLAINED:    \033[1m  will bolden the letters after itself, \033[0m  will end boldening BUT stops red text, so \033[0;31m sets text back to red color
+    k4="      ▓▓    ▓▓    ▓▓            $Lred$ICON_ubuntu$Bold OS Version:           $Orange $OS $Red"
+    k5="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Pink$ICON_chip$Bold CPU:                  $Yellow $cpu $Red"
+    k6="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Purple$ICON_chip2$Bold Ram:                  $Lgreen $ram$simplified_ram $Red"
+    k7="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Lblue$ICON_monitor$Bold Display Resolution:   $Cyan $resolution $Red"
+    k8="██    ▒▒▒▒▒▒▓▓▒▒▒▒▒▒    ██      $Cyan$ICON_folder$Bold Storage Space Used:   $Lblue $(($used_storage/1000000))/$(($total_storage/1000000)) GB$percent_storage $Red"
+    k9="▓▓          ▓▓          ▓▓      $Lgreen$ICON_folderplus$Bold Usable Storage:       $Purple $(($free_storage/1000000)) GB $Red"
+    ka="▓▓          ▓▓          ▓▓      $Yellow$ICON_terminal$Bold DE:                   $Pink $DE $Red"
+    kb="▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒      $Orange$ICON_clock2$Bold System Uptime:        $Lred $system_runtime $Red"
+    kc="▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒"
+    kd="            ▓▓"
+    ke="            ▓▓"
+    kf="    ██▓▓▒▒▒▒▓▓▒▒▒▒▓▓██"
+    kg="    ██▓▓▒▒▒▒▓▓▒▒▒▒▓▓██"
+    kh="          ▓▓  ▓▓"
+    ki="          ▓▓  ▓▓"
+    kj="        ▓▓      ▓▓"
+    kk="        ▓▓      ▓▓"
+    kl="          ▓▓▓▓▓▓"
+    km="          ▓▓▓▓▓▓"
+fi
+
+
+printf ${Red}
+figlet "Praise The Code"
+echo -e $k1$'\n'$k2$'\n'$k3$'\n'$k4$'\n'$k5$'\n'$k6$'\n'$k7$'\n'$k8$'\n'$k9$'\n'$ka$'\n'$kb$'\n'$kc$'\n'$kd$'\n'$ke$'\n'$kf$'\n'$kg$'\n'$kh$'\n'$ki$'\n'$kj$'\n'$kk$'\n'$kl$'\n'$km
+printf "${STOP}"
