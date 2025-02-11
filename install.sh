@@ -3,20 +3,13 @@
 ###########
 
 figlet -f small "Custom Commands Installer"
-# Ask the user for confirmation
-if [[ ! $1 == *"y"* ]]; then      #Ineffecient way of auto selecting yes, but whatever
-    read -p "Do you want to continue with the installation? [Y/n]: " uinput
-fi
-if [[ ! $uinput == *"y"* || ! $uinput == *"Y"* ]]; then
-  exit;
-fi
 
 # Check to make sure the user has all the required packages
 echo "Installing required packages, please enter your password"
 sudo echo
 packagelist=$(apt list)
 echo -e "Installing figlet"
-if [[ ! $packagelist == *"figlet/"* ]]; then
+if [[ ! $packagelist == *"figlet/noble"* ]]; then
     sudo apt install figlet -y
     if [ $? -ne 0 ]; then
         echo "FAILED"
