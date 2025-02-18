@@ -1,0 +1,7 @@
+echo Testing...
+sudo plymouthd
+sudo plymouth --show-splash
+sleep 5
+sudo plymouth quit
+echo Done!
+echo Have a nice day!

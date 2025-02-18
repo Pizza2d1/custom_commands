@@ -8,12 +8,20 @@ while read -r LINE; do
   fi
 done  < $CatList
 
+re='^[0-9]+$'
+if [[ $1 =~ $re ]]; then
+  sleepytime=$1
+else
+  sleepytime=1.5
+fi
 
+echo $1
+echo $sleepytime
 
 while true; do 
   for kitty in $(seq 0 $((${#CatPicturesArray[@]}-1))); do
     gsettings set org.gnome.desktop.background picture-uri "/home/pizza2d1/Downloads/catpics/${CatPicturesArray[$kitty]}"
     gsettings set org.gnome.desktop.background picture-uri-dark "/home/pizza2d1/Downloads/catpics/${CatPicturesArray[$kitty]}"
-    sleep 1
+    sleep $sleepytime
   done
 done

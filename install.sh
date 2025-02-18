@@ -63,6 +63,7 @@ if [ ! -d /usr/custom_paths ]; then
 fi
 sudo cp -r ./commands/* /usr/custom_paths/
 sudo chmod +x /usr/custom_paths/*
+cd
 
 # Modify .bashrc to make commands part of PATH (accessible from any directory)
 if [[ ! $(cat ~/.bashrc) == *"/usr/custom_paths/"* ]]; then
