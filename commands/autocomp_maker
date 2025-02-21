@@ -1,0 +1,66 @@
+read -p "What is the command name (make sure it is exact): " COMMAND
+echo "Put in the auto completion options that you want to include (enter nothing to continue): "
+counter=1
+OptionsArray=()
+OPTION=":3"
+while [[ ! -z $OPTION ]]; do  #While the user is still putting in inputs
+    read -p "Option #$counter: " OPTION
+    OptionsArray+=("$OPTION")
+    ((counter+=1))
+done
+if [ $counter == 1 ]; then
+    echo "No options added, exiting"
+else
+    for ITEM in ${OptionsArray[@]}; do
+        OptionsSpaced+=$(printf "%s " "$ITEM")
+    done
+    StringOfOptions=${OptionsSpaced::-1} #Removes the last space in the string to prevent breakage
+fi
+
+echo "echo \"# Pizza2d1's autocomp maker #
+_$COMMAND() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur=\\\"\\\${COMP_WORDS[COMP_CWORD]}\\\"
+    prev=\\\"\\\${COMP_WORDS[COMP_CWORD-1]}\\\"
+    opts=\\\"$StringOfOptions\\\"
+
+    if [[ \\\${cur} == -* ]] ; then
+        COMPREPLY=( \\\$(compgen -W \\\"\\\${opts}\\\" -- \\\${cur}) )
+        return 0
+    fi
+}
+# \\\`$COMMAND\\\` <tab> <tab> would show autocomplete above wordlist 
+complete -F _$COMMAND $COMMAND\" > /etc/bash_completion.d/custom_$COMMAND\\_autocomp
+
+rm temp_comp_maker.sh" > temp_comp_maker.sh
+
+# I have to make a temp file because for some reason I can't magically switch superuser controls in the middle a a bash script, -
+# - and this was the only way to do it in one command without being too confusing for the user/me in the future
+chmod +x temp_comp_maker.sh
+echo -e "Please enter your password (to edit the \033[0m\e[92m/etc/\033[0m directory) and refresh your terminal"
+sudo ./temp_comp_maker.sh
+
+echo COMPLETED
+
+
+# # EXAMPLE CODE ##
+# _foo() 
+# {
+#     local cur prev opts
+#     COMPREPLY=()
+#     cur="${COMP_WORDS[COMP_CWORD]}"
+#     prev="${COMP_WORDS[COMP_CWORD-1]}"
+#     opts="--help --verbose --version"
+
+#     if [[ ${cur} == -* ]] ; then
+#         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+#         return 0
+#     fi
+# }
+# ## `foo` <tab> <tab> would show autocomplete above wordlist 
+# complete -F _foo foo
+
+
+# You place this in the /etc/bash_completion.d/   directory ##
