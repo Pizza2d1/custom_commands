@@ -1,3 +1,5 @@
+## If you want the show_storage.sh command to be show instead, you can add in "y" as a parameter ##
+
 if [[ $1 == "y" ]]; then
     WriteLocation=show
     chmod +x ./show
@@ -6,11 +8,13 @@ else
 fi
 
 echo > $WriteLocation
+chmod +x $WriteLocation
 
 echo -e "LIST OF DRIVES:\n$(df)\n"
 ## DRIVE 1 ##
 read -p "What is the name off your first drive? (format as /dev/sdX ): " DRIVE1
 if [[ $DRIVE1 == *"/dev/"* ]]; then
+    DRIVE1Active=true
     echo "
 DRIVE1=$DRIVE1
 used_storage1=\$(df \$DRIVE1 | grep -h 2 | awk '\$DRIVE1 {print \$3}')
@@ -23,6 +27,7 @@ free_storage1=\$((\$total_storage1-\$used_storage1))
         exit;
     fi
 else
+    DRIVE1Active=false
     echo -e "
 #No drive was entered for this number\n
 used_storage1=0
@@ -34,11 +39,12 @@ fi
 ## DRIVE 2 ##
 read -p "What is the name off your second drive? (format as /dev/sdX ): " DRIVE2
 if [[ $DRIVE2 == *"/dev/"* ]]; then
+    DRIVE2Active=true
     echo "
 DRIVE2=$DRIVE2
 used_storage2=\$(df \$DRIVE2 | grep -h 2 | awk '\$DRIVE2 {print \$3}')
 total_storage2=\$(df \$DRIVE2 | grep -h 2 | awk '\$DRIVE2 {print \$2}')
-free_storage2=\$((\$total_storage1-\$used_storage2))
+free_storage2=\$((\$total_storage2-\$used_storage2))
 " >> $WriteLocation
     echo "Added $DRIVE2"
     if [ $? -ne 0 ]; then
@@ -46,6 +52,7 @@ free_storage2=\$((\$total_storage1-\$used_storage2))
         exit;
     fi
 else
+    DRIVE2Active=false
     echo -e "
 #No drive was entered for this number\n
 used_storage2=0
@@ -57,11 +64,12 @@ fi
 ## DRIVE 3 ##
 read -p "What is the name off your third drive? (format as /dev/sdX ): " DRIVE3
 if [[ $DRIVE3 == *"/dev/"* ]]; then
+    DRIVE3Active=true
     echo "
 DRIVE3=$DRIVE3
 used_storage3=\$(df \$DRIVE3 | grep -h 2 | awk '\$DRIVE3 {print \$3}')
 total_storage3=\$(df \$DRIVE3 | grep -h 2 | awk '\$DRIVE3 {print \$2}')
-free_storage3=\$((\$total_storage1-\$used_storage3))
+free_storage3=\$((\$total_storage3-\$used_storage3))
 " >> $WriteLocation
     echo "Added $DRIVE3"
     if [ $? -ne 0 ]; then
@@ -69,6 +77,7 @@ free_storage3=\$((\$total_storage1-\$used_storage3))
         exit;
     fi
 else
+    DRIVE3Active=false
     echo -e "
 #No drive was entered for this number\n
 used_storage3=0
@@ -86,6 +95,7 @@ TOTAL_FREE_STORAGE=$(($free_storage1+$free_storage2+$free_storage3))
 
 
 ## ADD FUNCTIONS ##
+# Function 1
 echo '
 function showStorage(){
     # Percent-wise how full the drives are
@@ -105,18 +115,28 @@ function showStorage(){
     echo -e "$(($TOTAL_USED_STORAGE/1000000))/$(($TOTAL_STORAGE/1000000)) GB  $TOTAL_PERCENT\n"
     figlet "FREE STORAGE"
     echo -e "$(($TOTAL_FREE_STORAGE/1000000)) GB\n"
-
+' >> $WriteLocation
+if $DRIVE1Active; then
+    echo '
     echo -e "\nDrive 1"
     echo -e "Storage Space Used: $(($used_storage1/1000000))/$(($total_storage1/1000000)) GB ($percent_storage1)"
-    echo -e "Usable Storage: $(($free_storage1/1000000)) GB\n\n"
+    echo -e "Usable Storage: $(($free_storage1/1000000)) GB\n\n"' >> $WriteLocation
+fi
+if $DRIVE2Active; then
+    echo '
     echo -e "\nDrive 2"
     echo -e "Storage Space Used: $(($used_storage2/1000000))/$(($total_storage2/1000000)) GB ($percent_storage2)"
-    echo -e "Usable Storage: $(($free_storage2/1000000)) GB\n\n"
+    echo -e "Usable Storage: $(($free_storage2/1000000)) GB\n\n"' >> $WriteLocation
+fi
+if $DRIVE3Active; then
+    echo '
     echo -e "\nDrive 3"
     echo -e "Storage Space Used: $(($used_storage3/1000000))/$(($total_storage3/1000000)) GB ($percent_storage3)"
-    echo -e "Usable Storage: $(($free_storage3/1000000)) GB\n\n"
-}' >> $WriteLocation
+    echo -e "Usable Storage: $(($free_storage3/1000000)) GB\n\n"' >> $WriteLocation
+fi
+echo '}' >> $WriteLocation
 
+# Function 2
 echo "
 function showStatus(){
     RED='\033[1;31m'
