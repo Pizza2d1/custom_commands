@@ -9,7 +9,7 @@ echo "Installing required packages, please enter your password"
 sudo echo
 packagelist=$(apt list)
 echo -e "Installing figlet"
-if [[ ! $packagelist == *"figlet/noble"* ]]; then
+if [[ ! $($packagelist | grep figlet) == *"installed"* ]]; then
     sudo apt install figlet -y
     if [ $? -ne 0 ]; then
         echo "FAILED"
@@ -45,7 +45,7 @@ else
     echo "sed is already installed"
 fi
 echo -e "Installing x11-xserver-utils"
-if [[ ! $packagelist == *"x11-xserver-utils/"* ]]; then
+if [[ ! $($packagelist | grep x11-xserver-utils) == *"installed"* ]]; then
     sudo apt install x11-xserver-utils -y
     if [ $? -ne 0 ]; then
         echo "FAILED"
