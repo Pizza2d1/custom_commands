@@ -2,12 +2,17 @@
 ## START ##
 ###########
 
-figlet -f small "Custom Commands Installer"
+# Intro (for funsies)
+packagelist=$(apt list)
+if [[ $($packagelist | grep figlet) == *"installed"* ]]; then
+    figlet -f small "Custom Commands Installer"
+else
+    echo -e "\nCustom Commands Installer\n"
+fi
 
 # Check to make sure the user has all the required packages
 echo "Installing required packages, please enter your password"
 sudo echo
-packagelist=$(apt list)
 echo -e "Installing figlet"
 if [[ ! $($packagelist | grep figlet) == *"installed"* ]]; then
     sudo apt install figlet -y
