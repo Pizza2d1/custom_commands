@@ -1,3 +1,5 @@
+#! /bin/bash
+
 echo Testing...
 sudo plymouthd
 sudo plymouth --show-splash

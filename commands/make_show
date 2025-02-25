@@ -1,3 +1,5 @@
+#! /bin/bash
+
 ## If you want the show_storage.sh command to be show instead, you can add in "y" as a parameter ##
 
 if [[ $1 == "y" ]]; then

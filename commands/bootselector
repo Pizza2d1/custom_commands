@@ -1,3 +1,5 @@
+#!/bin/bash
+
 AddPlymouth(){
     read -p "Input the directory that the .plymouth file is located in: " plydir
     plybn=$(basename $plydir)

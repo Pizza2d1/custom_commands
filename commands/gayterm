@@ -1,3 +1,5 @@
+#! /bin/bash
+
 source ~/.local/share/icons-in-terminal/icons_bash.sh
 OS=$(grep -E "^PRETTY_NAME=" /etc/os-release | sed "s/PRETTY_NAME=//")
 cpu=$(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g' | sed -r 's/ with Radeon Graphics//')
