@@ -50,7 +50,7 @@ else
     echo -e "\e[92msed is already installed\033[0m"
 fi
 echo -e "Installing curl"
-if [[ ! $packagelist == *"curl/"* ]]; then
+if [[ ! $($packagelist | grep curl/) == *"installed"* ]]; then
     sudo apt install curl -y
     if [ $? -ne 0 ]; then
         echo -e "\033[0;31mFAILED"
