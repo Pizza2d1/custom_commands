@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 read -p "What is the command name (make sure it is exact): " COMMAND
 echo "Put in the auto completion options that you want to include (enter nothing to continue): "
