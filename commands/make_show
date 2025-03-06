@@ -12,9 +12,39 @@ fi
 echo > $WriteLocation
 chmod +x $WriteLocation
 
+_comp() {
+    # prev=${COMP_WORDS[COMP_CWORD-1]}
+    if [[ $READLINE_LINE == "s" ]] || [[ $READLINE_LINE == "/dev/s" ]]; then
+        READLINE_LINE="/dev/sd"
+        (( READLINE_POINT += 7 ))
+        return 0
+    fi
+    if [[ $READLINE_LINE == "n" ]] || [[ $READLINE_LINE == "/dev/n" ]]; then
+        READLINE_LINE="/dev/nvme0"
+        (( READLINE_POINT += 10 ))
+        return 0
+    fi
+    if [[ $READLINE_LINE == "m" ]] || [[ $READLINE_LINE == "/dev/m" ]]; then
+        READLINE_LINE="/dev/mmcblk0"
+        (( READLINE_POINT += 13 ))
+        return 0
+    fi
+    if [[ $READLINE_LINE == "" ]]; then
+        READLINE_LINE+="/dev/"
+        (( READLINE_POINT += 14 ))
+    fi
+}
+# Make it available to bind
+export -f _comp
+# Enable readline mode
+set -o emacs
+# Bind TAB to our custom completion function
+bind -x '"\t"':_comp
+
+
 echo -e "LIST OF DRIVES:\n$(df)\n"
 ## DRIVE 1 ##
-read -p "What is the name off your first drive? (format as /dev/sdX ): " DRIVE1
+read -rep"What is the name off your first drive? (format as /dev/sdX ): " DRIVE1
 if [[ $DRIVE1 == *"/dev/"* ]]; then
     DRIVE1Active=true
     echo "
@@ -39,7 +69,7 @@ free_storage1=0
 fi
 
 ## DRIVE 2 ##
-read -p "What is the name off your second drive? (format as /dev/sdX ): " DRIVE2
+read -rep"What is the name off your second drive? (format as /dev/sdX ): " DRIVE2
 if [[ $DRIVE2 == *"/dev/"* ]]; then
     DRIVE2Active=true
     echo "
@@ -64,7 +94,7 @@ free_storage2=0
 fi
 
 ## DRIVE 3 ##
-read -p "What is the name off your third drive? (format as /dev/sdX ): " DRIVE3
+read -rep"What is the name off your third drive? (format as /dev/sdX ): " DRIVE3
 if [[ $DRIVE3 == *"/dev/"* ]]; then
     DRIVE3Active=true
     echo "
