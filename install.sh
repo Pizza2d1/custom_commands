@@ -20,7 +20,7 @@ if [[ ! $($packagelist | grep figlet) == *"installed"* ]]; then
         echo -e "\033[0;31mFAILED"
         echo "Please install figlet manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS"
     fi
 else
     echo "figlet is already installed"
@@ -32,7 +32,7 @@ if [[ ! $packagelist == *"lolcat/"* ]]; then
         echo -e "\033[0;31mFAILED"
         echo "Please install lolcat manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS"
     fi
 else
     echo "lolcat is already installed"
@@ -44,7 +44,7 @@ if [[ ! $packagelist == *"sed/"* ]]; then
         echo -e "\033[0;31mFAILED"
         echo "Please install sed manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS"
     fi
 else
     echo "sed is already installed"
@@ -56,7 +56,7 @@ if [[ ! $packagelist == *"curl/"* ]]; then
         echo -e "\033[0;31mFAILED"
         echo "Please install curl manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS"
     fi
 else
     echo "curl is already installed"
@@ -68,7 +68,7 @@ if [[ ! $($packagelist | grep x11-xserver-utils) == *"installed"* ]]; then
         echo -e "\033[0;31mFAILED"
         echo "Please install x11-xserver-utils manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS"
     fi
 else
     echo "x11-xserver-utils is already installed"
