@@ -587,7 +587,7 @@ while true; do
          fi
          exit;;
       -s | -sunglasses)     #Will make the desktop background some sunglasses)
-         if [[  ${WallpaperList[@]} == *"sunglasses.jpg"* ]]; then	
+         if [[  ${WallpaperList[@]} == *"sunglasses.jpeg"* ]]; then	
            Sunglasses_Wallpaper
          else
            echo -e "You must run \"$ProgName --sample\" to download these files"
