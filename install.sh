@@ -23,7 +23,7 @@ if [[ ! $($packagelist | grep figlet) == *"installed"* ]]; then
         echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "\e[92mfiglet is already installed\033[0m"
+    echo -e "\e[92mfiglet is already installed\033[0m"
 fi
 echo -e "Installing lolcat"
 if [[ ! $packagelist == *"lolcat/"* ]]; then
@@ -35,7 +35,7 @@ if [[ ! $packagelist == *"lolcat/"* ]]; then
         echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "\e[92mlolcat is already installed\033[0m"
+    echo -e "\e[92mlolcat is already installed\033[0m"
 fi
 echo -e "Installing sed"
 if [[ ! $packagelist == *"sed/"* ]]; then
@@ -47,7 +47,7 @@ if [[ ! $packagelist == *"sed/"* ]]; then
         echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "\e[92msed is already installed\033[0m"
+    echo -e "\e[92msed is already installed\033[0m"
 fi
 echo -e "Installing curl"
 if [[ ! $packagelist == *"curl/"* ]]; then
@@ -59,7 +59,7 @@ if [[ ! $packagelist == *"curl/"* ]]; then
         echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "\e[92mcurl is already installed\033[0m"
+    echo -e "\e[92mcurl is already installed\033[0m"
 fi
 echo -e "Installing x11-xserver-utils"
 if [[ ! $($packagelist | grep x11-xserver-utils) == *"installed"* ]]; then
@@ -71,7 +71,7 @@ if [[ ! $($packagelist | grep x11-xserver-utils) == *"installed"* ]]; then
         echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "\e[92mx11-xserver-utils is already installed\033[0m"
+    echo -e "\e[92mx11-xserver-utils is already installed\033[0m"
 fi
 
 # Install the custom commands
