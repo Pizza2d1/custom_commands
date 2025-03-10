@@ -26,7 +26,7 @@ else
     echo -e "\e[92mfiglet is already installed\033[0m"
 fi
 echo -e "Installing lolcat"
-if [[ ! $packagelist == *"lolcat/"* ]]; then
+if [[ ! $($packagelist | grep lolcat) == *"installed"* ]]; then
     sudo apt install lolcat -y
     if [ $? -ne 0 ]; then
         echo -e "\033[0;31mFAILED"
