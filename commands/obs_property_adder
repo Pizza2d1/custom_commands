@@ -1,0 +1,22 @@
+#!/bin/bash
+
+for file in ./*; do
+    filename=$(echo "\"$(basename "$file")\"" | sed 's/.md//')
+    echo $filename
+    file_contents=$(cat "$file")
+    read -p "What is the parent of this file?: " uinput
+    if [[ -z $uinput ]]; then
+        echo "
+---
+title: $filename
+---
+$file_contents" > "$file"
+    else
+        echo "
+---
+title: $filename
+parent: $uinput
+---
+$file_contents" > "$file"
+    fi
+done
