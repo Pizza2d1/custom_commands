@@ -17,49 +17,61 @@ echo -e "Installing figlet"
 if [[ ! $($packagelist | grep figlet) == *"installed"* ]]; then
     sudo apt install figlet -y
     if [ $? -ne 0 ]; then
-        echo "FAILED"
+        echo -e "\033[0;31mFAILED"
         echo "Please install figlet manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "figlet is already installed"
+    echo -e "\e[92mfiglet is already installed\033[0m"
 fi
 echo -e "Installing lolcat"
-if [[ ! $packagelist == *"lolcat/"* ]]; then
+if [[ ! $($packagelist | grep lolcat) == *"installed"* ]]; then
     sudo apt install lolcat -y
     if [ $? -ne 0 ]; then
-        echo "FAILED"
+        echo -e "\033[0;31mFAILED"
         echo "Please install lolcat manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "lolcat is already installed"
+    echo -e "\e[92mlolcat is already installed\033[0m"
 fi
 echo -e "Installing sed"
 if [[ ! $packagelist == *"sed/"* ]]; then
     sudo apt install sed -y
     if [ $? -ne 0 ]; then
-        echo "FAILED"
+        echo -e "\033[0;31mFAILED"
         echo "Please install sed manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "sed is already installed"
+    echo -e "\e[92msed is already installed\033[0m"
+fi
+echo -e "Installing curl"
+if [[ ! $($packagelist | grep curl/) == *"installed"* ]]; then
+    sudo apt install curl -y
+    if [ $? -ne 0 ]; then
+        echo -e "\033[0;31mFAILED"
+        echo "Please install curl manually"
+    else
+        echo -e "\e[92mSUCCESS\033[0m"
+    fi
+else
+    echo -e "\e[92mcurl is already installed\033[0m"
 fi
 echo -e "Installing x11-xserver-utils"
 if [[ ! $($packagelist | grep x11-xserver-utils) == *"installed"* ]]; then
     sudo apt install x11-xserver-utils -y
     if [ $? -ne 0 ]; then
-        echo "FAILED"
+        echo -e "\033[0;31mFAILED"
         echo "Please install x11-xserver-utils manually"
     else
-        echo "SUCCESS"
+        echo -e "\e[92mSUCCESS\033[0m"
     fi
 else
-    echo "x11-xserver-utils is already installed"
+    echo -e "\e[92mx11-xserver-utils is already installed\033[0m"
 fi
 
 # Install the custom commands

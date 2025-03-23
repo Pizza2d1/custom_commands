@@ -1,0 +1,4 @@
+read -p "Commit message: " uinput
+git add .
+git commit -am "$uinput"
+git push

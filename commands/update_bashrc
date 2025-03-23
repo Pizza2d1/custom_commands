@@ -1,0 +1,28 @@
+#!/bin/bash
+
+user=$(whoami)
+
+read -p "Do you want to add custom aliases to your .bashrc file?" uinput
+if [[ ! -z uinput ]] || [[ $uinput == "y" ]] || [[ $uinput == "Y" ]]; then
+    echo "
+
+##############
+### EXTRAS ###
+##############
+
+alias lsblk='lsblk -e7'
+alias neovim='/home/pizza2d1/.local/bin/lvim'
+alias schedule='evince /home/pizza2d1/Downloads/Alta-High-School-Bell-Schedule.pdf'
+alias calendar='evince /home/pizza2d1/Downloads/2024-2025-Calendar-K-12-1.pdf'
+# Git custom commands
+alias gitme='echo -e "\ngch  git checkout\ngcl  git clone\ngbr  git branch\ngba  git branch --all\ngm  git merge\n"'
+alias gcl='git clone'
+alias gch='git checkout'
+alias gbr='git branch'
+alias gba='git branch --all'
+alias gm='git merge'
+alias gst='git status'        
+alias sap='sudo apt update'
+
+" >> /home/$user/.bashrc
+fi
