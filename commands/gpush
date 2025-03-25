@@ -1,3 +1,10 @@
+#!/bin/bash
+
+if [[ $1 == "--help" ]]; then
+  echo "This program will add, commit and push all changes in a git repository"
+  exit
+fi
+
 read -p "Commit message: " uinput
 git add .
 git commit -am "$uinput"

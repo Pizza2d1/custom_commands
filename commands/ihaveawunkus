@@ -1,3 +1,10 @@
+#!/bin/bash
+
+if [[ $1 == "--help" ]]; then
+  echo "This program will rotate through all pictures (of cats) in the /home/pizza2d1/Downloads/catpics folder"
+  exit
+fi
+
 
 CatPicturesArray=()
 ls /home/pizza2d1/Downloads/catpics > tempcatfile.txt

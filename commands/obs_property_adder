@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ $1 == "--help" ]]; then
+  echo "This program will add markdown properties to the top of .md text files so that they can be used in the jekyll website format"
+  exit
+fi
+
+
 for file in ./*; do
     filename=$(echo "\"$(basename "$file")\"" | sed 's/.md//')
     file_contents=$(cat "$file")

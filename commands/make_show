@@ -5,6 +5,9 @@
 if [[ $1 == "y" ]]; then
     WriteLocation=show
     chmod +x ./show
+elif [[ $1 == "--help" ]]; then
+    echo "This program will make a program that will allow you to check the storage space on your drives with a single command"
+    exit
 else
     WriteLocation=show_storage.sh
 fi

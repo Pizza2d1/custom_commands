@@ -1,3 +1,11 @@
+#!/bin/bash
+
+if [[ $1 == "--help" ]]; then
+  echo "This program will convert all filenames in the current folder to lowercase letters and convert all spaces into undercases"
+  exit
+fi
+
+
 for SRC in ./*;
 do
     DST=`dirname "${SRC}"`/`basename "${SRC}" | tr '[A-Z]' '[a-z]'`
