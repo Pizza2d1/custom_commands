@@ -2,21 +2,85 @@
 
 for file in ./*; do
     filename=$(echo "\"$(basename "$file")\"" | sed 's/.md//')
-    echo $filename
     file_contents=$(cat "$file")
-    read -p "What is the parent of this file?: " uinput
-    if [[ -z $uinput ]]; then
-        echo "
----
-title: $filename
----
-$file_contents" > "$file"
+    echo $filename
+        
+    read -p "What is the title of this file? (Leave blank if you just want the filename): " title
+    if [[ -z $title ]]; then
+        title="\ntitle: $filename"
     else
-        echo "
----
-title: $filename
-parent: $uinput
----
-$file_contents" > "$file"
+        if [[ $title == "1" ]]; then
+            default_style=true
+            echo -e "---\ntitle: $filename\nparent: $1\nhas_toc: false\n---"
+            continue
+        fi
+        title="\ntitle: $title"
     fi
+
+ 
+    read -p "What is the parent of this file? (Leave blank if there is none): " parent
+    if [[ -z $parent ]]; then
+        parent=""
+    else
+        parent="\nparent: $parent"
+    fi
+
+ 
+    read -p "What is the grandparent of this file? (Leave blank if there is none): " grand_parent
+    if [[ -z $grand_parent ]]; then
+        grand_parent=""
+    else
+        grand_parent="\ngrand_parent: $grand_parent"
+    fi
+
+     
+    read -p "Do you want this document to be in the \"minimal\" style? [y/N]: " minimal
+    if [[ -z $minimal ]]; then
+        minimal=""
+    else
+        minimal="\nlayout: minimal"
+    fi
+
+
+    read -p "Do you want this document to have a table of contents (only matters if this file is a parent)? [Y/n]: " has_toc
+    if [[ ! -z $has_toc ]]; then
+        has_toc="\nhas_toc: false"
+    else
+        has_toc=""
+    fi
+
+    echo -e "---$title$parent$grand_parent$minimal$has_toc\n---"
 done
+
+
+
+
+
+
+
+
+
+
+
+
+
+# for file in ./*; do
+#     filename=$(echo "\"$(basename "$file")\"" | sed 's/.md//')
+#     echo $filename
+#     file_contents=$(cat "$file")
+#     read -p "What is the parent of this file?: " uinput
+#     if [[ -z $uinput ]]; then
+#         echo "
+# ---
+# title: $filename
+# ---
+# $file_contents" > "$file"
+#     else
+#         echo "
+# ---
+# title: $filename
+# parent: $uinput
+# ---
+# $file_contents" > "$file"
+#     fi
+# done
