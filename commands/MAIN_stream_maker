@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# if [[ -z $1 ]]; then
+#     echo "You can make this go a lot faster by providing a season as a parameter as: make_stream_html [SEASON NUMBER]"
+#     read -p "Do you want to continue? [Y/n]: " uinput
+#     if [[ ! -z $uinput ]] || [[ ! $uinput == "y" ]] || [[ ! $uinput == "Y" ]]; then
+#         exit;
+#     fi
+# fi
+
+
+# FILE=$(zenity --file-selection)
+# STREAMFILE=$(echo "$(basename "$FILE")")
+pwd
+ls ./
+read -p "Where is the directory that stores your video directories (absolute path): " BIG_FOLDER
+# BIG_FOLDER=/home/pizza2d1/HomeProgramming/webpage_making/Invincible
+for FOLDER in $BIG_FOLDER; do
+  echo $FOLDER
+done
+
+for FOLDER in $BIG_FOLDER/*; do
+  VIDEO_FILE=$(ls $FOLDER/*.mp4)
+  if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
+    continue
+  fi
+  FOLDER=$(basename $FOLDER)
+  VIDEO_FILE=$(basename $VIDEO_FILE)
+  DISPLAY_NAME=$(echo $VIDEO_FILE | sed 's/.mp4//')
+  echo
+  echo "FOLDER: $FOLDER"
+  echo "VIDEO FILE: $VIDEO_FILE"
+  read -p "What do you want to rename this folder to? (default: $FOLDER): " NEW_FOLDER
+  read -p "What do you want to rename this video file to? (default: $VIDEO_FILE): " NEW_FILE
+  read -p "Stream name to users? (default: $DISPLAY_NAME): " STREAM_NAME
+  
+  if [[ ! -z $NEW_FILE ]]; then
+    mv $FOLDER/$VIDEO_FILE $FOLDER/$NEW_FILE
+    VIDEO_FILE=$NEW_FILE
+  fi
+  if [[ ! -z $NEW_FOLDER ]]; then
+    mv $FOLDER $NEW_FOLDER
+    FOLDER=$NEW_FOLDER 
+  fi
+  if [[ ! -z $STREAM_NAME ]]; then
+    DISPLAY_NAME=$STREAM_NAME
+  fi
+
+  mkdir -p $FOLDER
+  rm $FOLDER/index.html
+  cat $FOLDER/index.html
+
+  echo -e "<!DOCTYPE html>   
+<html lang="en-US">
+    <head>
+        <title>
+            $DISPLAY_NAME
+        </title>
+        <link rel=\"stylesheet\" href=\"/CSS/nav_bar.css\">
+    </head>
+    <body>
+        <div id="HASH" class="blue-msg">
+        <span id="time-HASH" class="smalltext"><a href=\"../index.html\">BACK</a></span>
+        <span class="ios-circle"><a href=\"/index.html\">HOMEPAGE</a></span>
+        </div>
+
+        <p>$DISPLAY_NAME</p>
+        <video width="720" height="480" controls preload="auto">
+            <source src=\"$VIDEO_FILE\" type=\"video/mp4\">
+        </video> 
+        <a href=\"$VIDEO_FILE\" download>Download this episode</a>
+    </body>
+</html>" >> $FOLDER/index.html
+
+done
+
+# read -p "What do you want to call the folder?: " FOLDERNAME
+# read -p "What do you want to call this file?: " DISPLAYNAME
+
+# if [ ! -z $FOLDERNAME ]; then
+#     mkdir $FOLDERNAME
+#     cd $FOLDERNAME
+# fi
+
+
+
+# echo -e "<!DOCTYPE html>   
+# <html lang="en-US">
+#     <head>
+#         <title>
+#             $DISPLAYNAME
+#         </title>
+#         <link rel=\"stylesheet\" href=\"/CSS/nav_bar.css\">
+#     </head>
+#     <body>
+#         <div id="HASH" class="blue-msg">
+#         <span id="time-HASH" class="smalltext"><a href=\"../index.html\">BACK</a></span>
+#         <span class="ios-circle"><a href=\"/index.html\">HOMEPAGE</a></span>
+#         </div>
+
+#         <p>$DISPLAYNAME</p>
+#         <video width="1080" height="720" controls preload="auto">
+#             <source src=\"$FILE\" type=\"video/mp4\">
+#         </video> 
+#         <a href=\"$FILE\" download>Download this episode</a>
+#     </body>
+# </html>" >> index.html
+
+# cp "$FILE" ./
