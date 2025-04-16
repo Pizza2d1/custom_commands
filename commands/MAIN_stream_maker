@@ -49,9 +49,8 @@ for FOLDER in $BIG_FOLDER/*; do
     DISPLAY_NAME=$STREAM_NAME
   fi
 
-  mkdir -p $FOLDER
-  rm $FOLDER/index.html
-  cat $FOLDER/index.html
+  mkdir -p $BIG_FOLDER/$FOLDER
+  rm $BIG_FOLDER/$FOLDER/index.html
 
   echo -e "<!DOCTYPE html>   
 <html lang="en-US">
@@ -73,7 +72,9 @@ for FOLDER in $BIG_FOLDER/*; do
         </video> 
         <a href=\"$VIDEO_FILE\" download>Download this episode</a>
     </body>
-</html>" >> $FOLDER/index.html
+</html>" >> $BIG_FOLDER/$FOLDER/index.html
+
+echo $BIG_FOLDER/$FOLDER/index.html
 
 done
 
