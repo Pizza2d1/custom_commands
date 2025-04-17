@@ -38,7 +38,7 @@ for FOLDER in $BIG_FOLDER/*; do
   read -p "Stream name to users? (default: $DISPLAY_NAME): " STREAM_NAME
   
   if [[ ! -z $NEW_FILE ]]; then
-    mv $FOLDER/$VIDEO_FILE $FOLDER/$NEW_FILE
+    mv $BIG_FOLDER/$FOLDER/$VIDEO_FILE $BIG_FOLDER/$FOLDER/$NEW_FILE
     VIDEO_FILE=$NEW_FILE
   fi
   if [[ ! -z $NEW_FOLDER ]]; then
