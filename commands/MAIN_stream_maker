@@ -27,7 +27,7 @@ for FOLDER in $BIG_FOLDER/*; do
   FOLDER=$(basename $FOLDER)
   VIDEO_FILE=$(basename $VIDEO_FILE)
   DISPLAY_NAME=$(echo $VIDEO_FILE | sed 's/.mp4//')
-  BETTER_DISPLAY_NAME=$(echo $DISPLAY_NAME | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-9])/\1 \2 /g')
+  BETTER_DISPLAY_NAME=$(echo $DISPLAY_NAME | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
   echo
   echo $BETTER_DISPLAY_NAME
   echo "FOLDER: $FOLDER"
