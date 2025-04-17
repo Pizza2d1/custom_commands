@@ -64,8 +64,8 @@ for FOLDER in $BIG_FOLDER/*; do
     </head>
     <body>
         <div id="HASH" class="blue-msg">
-        <span id="time-HASH" class="smalltext btn-square"><a href=\"../index.html\">BACK</a></span>
-        <span class="ios-circle btn-square"><a href=\"/index.html\">HOMEPAGE</a></span>
+        <span id="time-HASH" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+        <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
 
         <p>$DISPLAY_NAME</p>
