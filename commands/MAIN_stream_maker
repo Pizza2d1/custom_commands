@@ -70,8 +70,9 @@ for FOLDER in $BIG_FOLDER/*; do
         <p>$DISPLAY_NAME</p>
         <video width="720" height="480" controls preload="auto">
             <source src=\"$VIDEO_FILE\" type=\"video/mp4\">
-        </video> 
-        <a href=\"$VIDEO_FILE\" download>Download this episode</a>
+        </video>
+        <br>
+        <h4>Wanna watch this offline? <a href=\"$VIDEO_FILE\" download>Download this episode</a></h4>
     </body>
 </html>" > $BIG_FOLDER/$FOLDER/index.html
 
