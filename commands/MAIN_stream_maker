@@ -59,11 +59,12 @@ for FOLDER in $BIG_FOLDER/*; do
             $DISPLAY_NAME
         </title>
         <link rel=\"stylesheet\" href=\"/CSS/nav_bar.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
     </head>
     <body>
         <div id="HASH" class="blue-msg">
-        <span id="time-HASH" class="smalltext"><a href=\"../index.html\">BACK</a></span>
-        <span class="ios-circle"><a href=\"/index.html\">HOMEPAGE</a></span>
+        <span id="time-HASH" class="smalltext btn-square"><a href=\"../index.html\">BACK</a></span>
+        <span class="ios-circle btn-square"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
 
         <p>$DISPLAY_NAME</p>
@@ -111,3 +112,26 @@ done
 # </html>" >> index.html
 
 # cp "$FILE" ./
+
+
+# <!DOCTYPE html>   
+# <html lang=en-US>
+#     <head>
+#         <title>
+#             Shrek 1
+#         </title>
+#         <link rel="stylesheet" href="/CSS/nav_bar.css">
+#     </head>
+#     <body>
+#         <div id=HASH class=blue-msg>
+#         <span id=time-HASH class=smalltext><a href="../index.html">BACK</a></span>
+#         <span class=ios-circle><a href="/index.html">HOMEPAGE</a></span>`
+#         </div>
+
+#         <p>Shrek 1</p>
+#         <video width=1920 height=1080 controls preload=auto>
+#             <source src="HowlsMovingCastle.mp4" type="video/mp4">
+#         </video> 
+#         <a href="HowlsMovingCastle.mp4" download>Download this movie</a>
+#     </body>
+# </html>
