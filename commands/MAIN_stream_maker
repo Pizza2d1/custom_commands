@@ -31,13 +31,15 @@ for FOLDER in $BIG_FOLDER/*; do
   echo
   echo "FOLDER: $FOLDER"
   echo "VIDEO FILE: $VIDEO_FILE"
-  read -p "What do you want to rename this folder to? skip with \"q\" (default: $FOLDER): " NEW_FOLDER
-  if [[ $NEW_FOLDER == "q" ]]; then
-    continue
+  echo "DISPLAY NAME: $DISPLAY_NAME" 
+  if [[ ! $1 == "pass" ]]; then
+    read -p "What do you want to rename this folder to? skip with \"q\" (default: $FOLDER): " NEW_FOLDER
+    if [[ $NEW_FOLDER == "q" ]]; then
+      continue
+    fi
+    read -p "What do you want to rename this video file to? (default: $VIDEO_FILE): " NEW_FILE
+    read -p "Stream name to users? (default: $DISPLAY_NAME): " STREAM_NAME
   fi
-  read -p "What do you want to rename this video file to? (default: $VIDEO_FILE): " NEW_FILE
-  read -p "Stream name to users? (default: $DISPLAY_NAME): " STREAM_NAME
-  
   if [[ ! -z $NEW_FILE ]]; then
     mv $BIG_FOLDER/$FOLDER/$VIDEO_FILE $BIG_FOLDER/$FOLDER/$NEW_FILE
     VIDEO_FILE=$NEW_FILE
@@ -67,8 +69,7 @@ for FOLDER in $BIG_FOLDER/*; do
         <span id="time-HASH" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
-
-        <p>$DISPLAY_NAME</p>
+        <h1>$DISPLAY_NAME</h1>
         <video width="720" height="480" controls preload="auto">
             <source src=\"$VIDEO_FILE\" type=\"video/mp4\">
         </video>
@@ -78,42 +79,7 @@ for FOLDER in $BIG_FOLDER/*; do
 </html>" > $BIG_FOLDER/$FOLDER/index.html
 
 echo $BIG_FOLDER/$FOLDER/index.html
-
 done
-
-# read -p "What do you want to call the folder?: " FOLDERNAME
-# read -p "What do you want to call this file?: " DISPLAYNAME
-
-# if [ ! -z $FOLDERNAME ]; then
-#     mkdir $FOLDERNAME
-#     cd $FOLDERNAME
-# fi
-
-
-
-# echo -e "<!DOCTYPE html>   
-# <html lang="en-US">
-#     <head>
-#         <title>
-#             $DISPLAYNAME
-#         </title>
-#         <link rel=\"stylesheet\" href=\"/CSS/nav_bar.css\">
-#     </head>
-#     <body>
-#         <div id="HASH" class="blue-msg">
-#         <span id="time-HASH" class="smalltext"><a href=\"../index.html\">BACK</a></span>
-#         <span class="ios-circle"><a href=\"/index.html\">HOMEPAGE</a></span>
-#         </div>
-
-#         <p>$DISPLAYNAME</p>
-#         <video width="1080" height="720" controls preload="auto">
-#             <source src=\"$FILE\" type=\"video/mp4\">
-#         </video> 
-#         <a href=\"$FILE\" download>Download this episode</a>
-#     </body>
-# </html>" >> index.html
-
-# cp "$FILE" ./
 
 
 # <!DOCTYPE html>   
