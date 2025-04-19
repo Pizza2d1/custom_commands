@@ -27,10 +27,12 @@ BIG_FOLDER=/website-data/shows/RegularShow
 
 
 for FOLDER in $BIG_FOLDER/*; do
+  echo
   echo "BIG FOLDER: $BIG_FOLDER"
   echo "FOLDER: $FOLDER"
-  read -ra VIDEO_FILES <<< "$FOLDER"
-  for VIDEO_FILE in ${VIDEO_FILES[@]}; do
+  # read -ra VIDEO_FILES <<< "$FOLDER"
+  # for VIDEO_FILE in ${VIDEO_FILES[@]}; do
+  for VIDEO_FILE in $FOLDER; do
     if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
       continue
     fi
@@ -38,7 +40,6 @@ for FOLDER in $BIG_FOLDER/*; do
     VIDEO_FILE=$(basename $VIDEO_FILE)
     DISPLAY_NAME=$(echo $VIDEO_FILE | sed 's/.mp4//')
     DISPLAY_NAME=$(echo $DISPLAY_NAME | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
-    echo
     echo "FOLDER: $FOLDER"
     echo "VIDEO FILE: $VIDEO_FILE"
     echo "DISPLAY NAME: $DISPLAY_NAME" 
