@@ -27,7 +27,7 @@ read -p "Where is the directory that stores your video directories (absolute pat
 
 
 for FOLDER in $BIG_FOLDER/*; do
-  for VIDEO_FILE $BIG_FOLDER/$FOLDER/*.mp4; do
+  for VIDEO_FILE in $(ls $FOLDER/*.mp4); do
     if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
       continue
     fi
