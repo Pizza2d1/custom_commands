@@ -27,7 +27,7 @@ read -p "Where is the directory that stores your video directories (absolute pat
 
 
 for FOLDER in $BIG_FOLDER/*; do
-  for *.mp4 in $BIG_FOLDER/$FOLDER; do
+  for VIDEO_FILE $BIG_FOLDER/$FOLDER/*.mp4; do
     if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
       continue
     fi
@@ -82,9 +82,9 @@ for FOLDER in $BIG_FOLDER/*; do
         <br>
         <h4>Wanna watch this offline? <a href=\"$VIDEO_FILE\" download>Download this episode</a></h4>
     </body>
-</html>" > $BIG_FOLDER/$FOLDER/index.html
+</html>" # > $BIG_FOLDER/$FOLDER/index.html
 
-echo $BIG_FOLDER/$FOLDER/index.html
+    echo $BIG_FOLDER/$FOLDER/index.html
 done
 
 
