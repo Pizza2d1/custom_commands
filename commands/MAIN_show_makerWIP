@@ -27,6 +27,8 @@ BIG_FOLDER=/website-data/shows/RegularShow
 
 
 for FOLDER in $BIG_FOLDER/*; do
+  echo "BIG FOLDER: $BIG_FOLDER"
+  echo "FOLDER: $FOLDER"
   read -ra VIDEO_FILES <<< "$FOLDER"
   for VIDEO_FILE in ${VIDEO_FILES[@]}; do
     if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
