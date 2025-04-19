@@ -20,7 +20,7 @@
 pwd
 ls ./
 # read -p "Where is the directory that stores your video directories (absolute path): " BIG_FOLDER
-BIG_FOLDER=/website-data/shows
+BIG_FOLDER=/website-data/shows/RegularShow/RegularShowSeason1
 # for FOLDER in $BIG_FOLDER; do
 #   echo $FOLDER
 # done
