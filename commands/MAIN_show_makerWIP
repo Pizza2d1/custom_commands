@@ -85,6 +85,7 @@ for FOLDER in $BIG_FOLDER/*; do
 </html>" # > $BIG_FOLDER/$FOLDER/index.html
 
     echo $BIG_FOLDER/$FOLDER/index.html
+  done
 done
 
 
