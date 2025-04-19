@@ -6,14 +6,12 @@ for file in ./*; do
     file_contents=$(cat "$file")
     read -p "What is the parent of this file?: " uinput
     if [[ -z $uinput ]]; then
-        echo "
----
+        echo "---
 title: $filename
 ---
 $file_contents" > "$file"
     else
-        echo "
----
+        echo "---
 title: $filename
 parent: $uinput
 ---
