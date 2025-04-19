@@ -1,0 +1,156 @@
+#!/bin/bash
+
+
+### This program is used to make the index.html files for the different shows that I have on my website
+### set the location of the video directories folder to the */shows folder so that it can cycle through each show's folder
+### This program will prompt to make a stream-episode#.html for each .mp4 file in your show's directory
+
+
+# if [[ -z $1 ]]; then
+#     echo "You can make this go a lot faster by providing a season as a parameter as: make_stream_html [SEASON NUMBER]"
+#     read -p "Do you want to continue? [Y/n]: " uinput
+#     if [[ ! -z $uinput ]] || [[ ! $uinput == "y" ]] || [[ ! $uinput == "Y" ]]; then
+#         exit;
+#     fi
+# fi
+
+
+# FILE=$(zenity --file-selection)
+# STREAMFILE=$(echo "$(basename "$FILE")")
+pwd
+ls ./
+read -p "Where is the directory that stores your video directories (absolute path): " BIG_FOLDER
+# BIG_FOLDER=/home/pizza2d1/HomeProgramming/webpage_making/Invincible
+# for FOLDER in $BIG_FOLDER; do
+#   echo $FOLDER
+# done
+
+
+for FOLDER in $BIG_FOLDER/*; do
+  for *.mp4 in $BIG_FOLDER/$FOLDER; do
+    if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
+      continue
+    fi
+    VIDEO_FILE=$(basename $VIDEO_FILE)
+    DISPLAY_NAME=$(echo $VIDEO_FILE | sed 's/.mp4//')
+    DISPLAY_NAME=$(echo $DISPLAY_NAME | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
+    echo
+    echo "FOLDER: $FOLDER"
+    echo "VIDEO FILE: $VIDEO_FILE"
+    echo "DISPLAY NAME: $DISPLAY_NAME" 
+    if [[ ! $1 == "pass" ]]; then
+      read -p "What do you want to rename this folder to? skip with \"q\" (default: $FOLDER): " NEW_FOLDER
+      if [[ $NEW_FOLDER == "q" ]]; then
+        continue
+      fi
+      read -p "What do you want to rename this video file to? (default: $VIDEO_FILE): " NEW_FILE
+      read -p "Stream name to users? (default: $DISPLAY_NAME): " STREAM_NAME
+    fi
+    if [[ ! -z $NEW_FILE ]]; then
+      mv $BIG_FOLDER/$FOLDER/$VIDEO_FILE $BIG_FOLDER/$FOLDER/$NEW_FILE
+      VIDEO_FILE=$NEW_FILE
+    fi
+    if [[ ! -z $NEW_FOLDER ]]; then
+      mv $FOLDER $NEW_FOLDER
+      FOLDER=$NEW_FOLDER 
+    fi
+    if [[ ! -z $STREAM_NAME ]]; then
+      DISPLAY_NAME=$STREAM_NAME
+    fi
+
+    mkdir -p $BIG_FOLDER/$FOLDER
+    rm $BIG_FOLDER/$FOLDER/index.html
+
+    echo -e "<!DOCTYPE html>   
+<html lang="en-US">
+    <head>
+        <title>
+            $DISPLAY_NAME
+        </title>
+        <link rel=\"stylesheet\" href=\"/CSS/nav_bar.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+    </head>
+    <body>
+        <div id="HASH" class="blue-msg">
+        <span id="time-HASH" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+        <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+        </div>
+        <h1>$DISPLAY_NAME</h1>
+        <video width="720" height="480" controls preload="auto">
+            <source src=\"$VIDEO_FILE\" type=\"video/mp4\">
+        </video>
+        <br>
+        <h4>Wanna watch this offline? <a href=\"$VIDEO_FILE\" download>Download this episode</a></h4>
+    </body>
+</html>" > $BIG_FOLDER/$FOLDER/index.html
+
+echo $BIG_FOLDER/$FOLDER/index.html
+done
+
+
+
+
+
+
+
+# for FOLDER in $BIG_FOLDER/*; do
+#   VIDEO_FILE=$(ls $FOLDER/*.mp4)
+#   if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
+#     continue
+#   fi
+#   FOLDER=$(basename $FOLDER)
+#   VIDEO_FILE=$(basename $VIDEO_FILE)
+#   DISPLAY_NAME=$(echo $VIDEO_FILE | sed 's/.mp4//')
+#   DISPLAY_NAME=$(echo $DISPLAY_NAME | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
+#   echo
+#   echo "FOLDER: $FOLDER"
+#   echo "VIDEO FILE: $VIDEO_FILE"
+#   echo "DISPLAY NAME: $DISPLAY_NAME" 
+#   if [[ ! $1 == "pass" ]]; then
+#     read -p "What do you want to rename this folder to? skip with \"q\" (default: $FOLDER): " NEW_FOLDER
+#     if [[ $NEW_FOLDER == "q" ]]; then
+#       continue
+#     fi
+#     read -p "What do you want to rename this video file to? (default: $VIDEO_FILE): " NEW_FILE
+#     read -p "Stream name to users? (default: $DISPLAY_NAME): " STREAM_NAME
+#   fi
+#   if [[ ! -z $NEW_FILE ]]; then
+#     mv $BIG_FOLDER/$FOLDER/$VIDEO_FILE $BIG_FOLDER/$FOLDER/$NEW_FILE
+#     VIDEO_FILE=$NEW_FILE
+#   fi
+#   if [[ ! -z $NEW_FOLDER ]]; then
+#     mv $FOLDER $NEW_FOLDER
+#     FOLDER=$NEW_FOLDER 
+#   fi
+#   if [[ ! -z $STREAM_NAME ]]; then
+#     DISPLAY_NAME=$STREAM_NAME
+#   fi
+
+#   mkdir -p $BIG_FOLDER/$FOLDER
+#   rm $BIG_FOLDER/$FOLDER/index.html
+
+#   echo -e "<!DOCTYPE html>   
+# <html lang="en-US">
+#     <head>
+#         <title>
+#             $DISPLAY_NAME
+#         </title>
+#         <link rel=\"stylesheet\" href=\"/CSS/nav_bar.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+#     </head>
+#     <body>
+#         <div id="HASH" class="blue-msg">
+#         <span id="time-HASH" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+#         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+#         </div>
+#         <h1>$DISPLAY_NAME</h1>
+#         <video width="720" height="480" controls preload="auto">
+#             <source src=\"$VIDEO_FILE\" type=\"video/mp4\">
+#         </video>
+#         <br>
+#         <h4>Wanna watch this offline? <a href=\"$VIDEO_FILE\" download>Download this episode</a></h4>
+#     </body>
+# </html>" > $BIG_FOLDER/$FOLDER/index.html
+
+# echo $BIG_FOLDER/$FOLDER/index.html
+# done

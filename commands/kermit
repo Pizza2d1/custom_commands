@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ $1 == "--help" ]]; then
+  echo "This program will show you a kermit version of term"
+  exit
+fi
+
+
 cpu=$(lscpu | grep "Model name:" | sed -r 's/Model name:\s{1,}//g' | sed -r 's/ with Radeon Graphics//')
 ram_num=$(cat /proc/meminfo | grep "MemTotal" | sed -r 's/MemTotal:       //' | sed -r 's/ kB//')
 ram=$(cat /proc/meminfo | grep "MemTotal" | sed -r 's/MemTotal:       //')
