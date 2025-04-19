@@ -19,8 +19,8 @@
 # STREAMFILE=$(echo "$(basename "$FILE")")
 pwd
 ls ./
-read -p "Where is the directory that stores your video directories (absolute path): " BIG_FOLDER
-# BIG_FOLDER=/home/pizza2d1/HomeProgramming/webpage_making/Invincible
+# read -p "Where is the directory that stores your video directories (absolute path): " BIG_FOLDER
+BIG_FOLDER=/website-data/shows
 # for FOLDER in $BIG_FOLDER; do
 #   echo $FOLDER
 # done
@@ -31,6 +31,7 @@ for FOLDER in $BIG_FOLDER/*; do
     if [[ -z VIDEO_FILE ]] || [[ $VIDEO_FILE == "" ]]; then
       continue
     fi
+    echo $VIDEO_FILE
     VIDEO_FILE=$(basename $VIDEO_FILE)
     DISPLAY_NAME=$(echo $VIDEO_FILE | sed 's/.mp4//')
     DISPLAY_NAME=$(echo $DISPLAY_NAME | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
