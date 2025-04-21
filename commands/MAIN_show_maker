@@ -43,6 +43,11 @@ for FILE in $(ls *.mp4); do
     # echo "NEXT EPISODE NUMBER $NEXT_EPISODE_NUMBER"
     PREVIOUS_EPISODE_NUMBER=$(($FILENUMBER-1))
     # echo "PREVIOUS EPISODE NUMBER: $PREVIOUS_EPISODE_NUMBER"
+    if [[ ${FILENUMBER:0:1} == "0" ]]; then
+        NEXT_EPISODE_NUMBER="0$NEXT_EPISODE_NUMBER"
+        PREVIOUS_EPISODE_NUMBE="0$PREVIOUS_EPISODE_NUMBER"
+    fi
+    
     re='^[0-9]+$' # All numbers between 0 and 9 to test number inputs
 
     echo -e "\nCurrent Season: $SEASON_NUMBER\nVideo File Name: $FILE"
