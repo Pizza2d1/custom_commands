@@ -94,9 +94,9 @@ for FILE in $(ls *.mp4); do
     <head>
         <title>
             $SHOW_NAME $SEASON_NUMBER:$EPISODE_NUMBER
-            <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
-            <link rel=\"stylesheet\" href=\"/CSS/stream.css\">
         </title>
+        <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/stream.css\">
     </head>
     <body>
         <hr>
