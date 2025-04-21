@@ -101,7 +101,7 @@ for FILE in $(ls *.mp4); do
     <body>
         <hr>
         <div id=\"HASH\" class=\"blue-msg\">
-        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"..index.html\">BACK</a></span>
+        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
         <p>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</p>
@@ -110,11 +110,11 @@ for FILE in $(ls *.mp4); do
         </video>" > stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
     if [[ $PREVIOUS_EPISODE_NUMBER != "0" ]]; then
         echo -e "
-            <h2 class="btn-square"><a href=\"stream_season$SEASON_NUMBER""_episode$PREVIOUS_EPISODE_NUMBER.html\">Previous Episode</a></h2>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+            <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$PREVIOUS_EPISODE_NUMBER.html\">Previous Episode</a></h2>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
     fi
     echo -e "
-            <h2 class="btn-square"><a href=\"stream_season$SEASON_NUMBER""_episode$NEXT_EPISODE_NUMBER.html\">Next Episode</a></h2>
-            <h2 class="btn-square"><a href=\"$FILELOCATION.mp4\" download>Download this episode</a></h2>
+            <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$NEXT_EPISODE_NUMBER.html\">Next Episode</a></h2>
+            <h2 class=\"btn-square\"><a href=\"$FILELOCATION.mp4\" download>Download this episode</a></h2>
     </body>
 </html>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
 done
