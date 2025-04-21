@@ -35,6 +35,9 @@ for FILE in $(ls *.mp4); do
     FILELOCATION=${FILELOCATION:1:-1} # You need to cut off the quotation marks that sed give this string
     # echo "FILELOCATION $FILELOCATION"
     FILENUMBER=$(echo "\"$(basename "$FILE")\"" | sed 's/^.*E//' | sed 's/\.mp4//' | sed 's/[^0-9]//g')
+    if [[ ${FILENUMBER:0:1} == "0" ]]; then
+        FILENUMBER=${FILENUMBER:1}
+    fi
     echo "FILENUMBER $FILENUMBER"
     NEXT_EPISODE_NUMBER=$(($FILENUMBER+1))
     # echo "NEXT EPISODE NUMBER $NEXT_EPISODE_NUMBER"
