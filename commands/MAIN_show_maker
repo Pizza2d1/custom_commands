@@ -84,7 +84,7 @@ for FILE in $(ls *.mp4); do
     fi
 
     if [[ -z $uinput ]]; then
-        EPISODE_NUMBER=$FILENUMBER
+        EPISODE_NUMBER=$FILENUMBER  
     else
         EPISODE_NUMBER=$uinput
     fi
@@ -94,13 +94,15 @@ for FILE in $(ls *.mp4); do
     <head>
         <title>
             $SHOW_NAME $SEASON_NUMBER:$EPISODE_NUMBER
+            <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+            <link rel=\"stylesheet\" href=\"/CSS/stream.css\">
         </title>
     </head>
     <body>
         <hr>
-        <div id="HASH" class="blue-msg">
-        <span id="time-HASH" class="smalltext"><a href="..index.html">BACK</a></span>
-        <span class="ios-circle"><a href="/index.html">HOMEPAGE</a></span>
+        <div id=\"HASH\" class=\"blue-msg\">
+        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"..index.html\">BACK</a></span>
+        <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
         <p>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</p>
         <video width="720" height="480" controls preload="auto">
