@@ -101,13 +101,14 @@ for FILE in $(ls *.mp4); do
     <body>
         <hr>
         <div id=\"HASH\" class=\"blue-msg\">
-        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"./index.html\">BACK</a></span>
         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
         <p>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</p>
         <video width="720" height="480" controls preload="auto">
             <source src=\"$FILELOCATION.mp4\" type=\"video/mp4\">
-        </video>" > stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+        </video>
+        <br>" > stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
     if [[ $PREVIOUS_EPISODE_NUMBER != "0" ]]; then
         echo -e "
             <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$PREVIOUS_EPISODE_NUMBER.html\">Previous Episode</a></h2>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
