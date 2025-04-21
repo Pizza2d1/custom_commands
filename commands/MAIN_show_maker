@@ -113,7 +113,7 @@ for FILE in $(ls *.mp4); do
         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
         <p>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</p>
-        <video width="720" height="480" controls preload="auto">
+        <video width=\"720\" height=\"480\" controls preload=\"auto\">
             <source src=\"$FILELOCATION.mp4\" type=\"video/mp4\">
         </video>
         <br>" > stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
