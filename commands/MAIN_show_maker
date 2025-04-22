@@ -78,7 +78,7 @@ for FILE in $(ls *.mp4); do
             uinput=69420
             continue
         fi
-        echo -e "\n$FILE"
+        echo -e "\nCurrent Season: $SEASON_NUMBER\nVideo File Name: $FILE"
         echo -e "
 [c] Change File Name
 [n] New season
@@ -107,12 +107,12 @@ for FILE in $(ls *.mp4); do
         <link rel=\"stylesheet\" href=\"/CSS/stream.css\">
     </head>
     <body>
-        <hr>
         <div id=\"HASH\" class=\"blue-msg\">
         <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"./index.html\">BACK</a></span>
         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
         </div>
-        <p>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</p>
+        <hr>
+        <h3>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</h3>
         <video width=\"720\" height=\"480\" controls preload=\"auto\">
             <source src=\"$FILELOCATION.mp4\" type=\"video/mp4\">
         </video>
