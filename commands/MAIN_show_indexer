@@ -34,8 +34,8 @@ for SEASON in $(seq $SEASONS); do
     read -p "How many episodes are in season $SEASON?: " EPISODES
     read -p "Do you want to include episode titles? [y/N]: " TITLE_CHOICE
     if [[ $TITLE_CHOICE == "y" ]] || [[ $TITLE_CHOICE == "Y" ]]; then
-        read -p "Episode $EPISODE title: " EPISODE_TITLE 
         for EPISODE in $(seq $EPISODES); do
+            read -p "Episode $EPISODE title: " EPISODE_TITLE 
             echo "        <div class=\"button-container tooltip\">
             <h3><a href=\"stream_season$SEASON""_episode$EPISODE.html\" class=\"btn-square\">Episode $EPISODE</a></h3>
         <span class=\"tooltiptext\">$EPISODE_TITLE<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
