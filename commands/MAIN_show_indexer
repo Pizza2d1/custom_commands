@@ -130,7 +130,7 @@ for SEASON in $(seq $SEASONS); do
 
     echo "        <br>
         <h1>$DISPLAY_NAME Season $SEASON</h1>
-        <p><a href=\"$SHOW""Season1/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
+        <p><a href=\"$SHOW""Season$SEASON/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
 
     read -p "How many episodes are in season $SEASON?: " EPISODES
     for EPISODE in $(seq $EPISODES); do
