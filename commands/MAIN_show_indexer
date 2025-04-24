@@ -102,6 +102,7 @@
 
 DEFAULT_SHOW_NAME=$(basename $(pwd) | sed 's/Season.*//i')
 
+read -p "What is the show's directory name?: " SHOW
 read -p "What is the show name? (default: $DEFAULT_SHOW_NAME): " SHOW_NAME
 if [[ -z $SHOW_NAME ]]; then
     SHOW_NAME=$DEFAULT_SHOW_NAME
