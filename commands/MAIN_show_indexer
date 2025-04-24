@@ -11,7 +11,7 @@ echo -e "
 read -p "Option: " UINPUT
 
 
-if [[ $UINPUT == 's']] || [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
+if [[ $UINPUT == 's' ]] || [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
     if [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
 
         read -p "What is the directory name of the show? (default: $DEFAULT_SHOW_NAME): " SHOW
