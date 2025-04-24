@@ -1,0 +1,195 @@
+
+
+#     ## GET FILE DATA ##
+#     FILENAME=$(echo "\"$(basename "$FILE")\"")
+#     # echo "FILENAME: $FILENAME"
+#     FILELOCATION=$(echo $FILENAME | sed 's/\.mp4//')
+#     FILELOCATION=${FILELOCATION:1:-1} # You need to cut off the quotation marks that sed give this string
+#     # echo "FILELOCATION $FILELOCATION"
+#     FILENUMBER=$(echo "\"$(basename "$FILE")\"" | sed 's/^.*E//' | sed 's/\.mp4//' | sed 's/[^0-9]//g')
+#     if [[ ${FILENUMBER:0:1} == "0" ]]; then
+#         FILENUMBER=${FILENUMBER:1}
+#     fi
+#     echo "FILENUMBER $FILENUMBER"
+#     NEXT_EPISODE_NUMBER=$(($FILENUMBER+1))
+#     # echo "NEXT EPISODE NUMBER $NEXT_EPISODE_NUMBER"
+#     PREVIOUS_EPISODE_NUMBER=$(($FILENUMBER-1))
+#     # echo "PREVIOUS EPISODE NUMBER: $PREVIOUS_EPISODE_NUMBER"
+#     if [[ ${FILENUMBER:0:1} == "0" ]]; then
+#         NEXT_EPISODE_NUMBER="0$NEXT_EPISODE_NUMBER"
+#         PREVIOUS_EPISODE_NUMBE="0$PREVIOUS_EPISODE_NUMBER"
+#     fi
+#     choosing=true
+    
+#     re='^[0-9]+$' # All numbers between 0 and 9 to test number inputs
+
+#     echo -e "\nCurrent Season: $SEASON_NUMBER\nVideo File Name: $FILE"
+#     echo -e "
+# [c] Change File Name
+# [n] New season
+# [s] Skip file
+# [#] Set episode for current file (default: $FILENUMBER)\n"
+    
+#     read -p "Input: " uinput
+#     while [[ $uinput == 'c' ]] || [[ $uinput == 'n' ]] && [[ $uinput != $re ]] && $choosing; do
+#         if [[ $uinput == "c" ]]; then
+#             choosing=true
+#             while $choosing; do
+#                 read -p "What do you want to the new filename to be?: " NEW_FILENAME
+#                 read -p "Is this name correct, $NEW_FILENAME? [Y/n]: " uinput
+#                 if [[ ! $uinput == 'n' ]] || [[ ! $uinput == 'N' ]]; then
+#                     choosing=false
+#                     mv $FILE "$NEW_FILENAME"
+#                     FILE=$NEW_FILENAME
+#                 fi
+#             done
+#         elif [[ $uinput == 'n' ]]; then
+#             read -p "What is the new season number?: " NEW_SEASON_NUMBER
+#             SEASON_NUMBER=$NEW_SEASON_NUMBER
+#         elif [[ $uinput == 's' ]]; then
+#             uinput=69420
+#             continue
+#         fi
+#         echo -e "\n$FILE"
+#         echo -e "
+# [c] Change File Name
+# [n] New season
+# [s] Skip file
+# [#] Set episode for current file (default: $FILENUMBER)\n"
+#         read -p "Input: " uinput
+#     done
+
+#     if [[ $uinput == 's' ]]; then
+#         continue
+#     fi
+
+#     if [[ -z $uinput ]]; then
+#         EPISODE_NUMBER=$FILENUMBER  
+#     else
+#         EPISODE_NUMBER=$uinput
+#     fi
+
+#     echo -e "<!DOCTYPE html>   
+# <html lang="en-US">
+#     <head>
+#         <title>
+#             $SHOW_NAME $SEASON_NUMBER:$EPISODE_NUMBER
+#         </title>
+#         <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/stream.css\">
+#     </head>
+#     <body>
+#         <hr>
+#         <div id=\"HASH\" class=\"blue-msg\">
+#         <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"./index.html\">BACK</a></span>
+#         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+#         </div>
+#         <p>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</p>
+#         <video width=\"720\" height=\"480\" controls preload=\"auto\">
+#             <source src=\"$FILELOCATION.mp4\" type=\"video/mp4\">
+#         </video>
+#         <br>" > stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+#     if [[ $PREVIOUS_EPISODE_NUMBER != "0" ]]; then
+#         echo -e "
+#             <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$PREVIOUS_EPISODE_NUMBER.html\">Previous Episode</a></h2>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+#     fi
+#     echo -e "
+#             <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$NEXT_EPISODE_NUMBER.html\">Next Episode</a></h2>
+#             <h2 class=\"btn-square\"><a href=\"$FILELOCATION.mp4\" download>Download this episode</a></h2>
+#     </body>
+# </html>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+
+
+DEFAULT_SHOW_NAME=$(basename $(pwd) | sed 's/Season.*//i')
+
+read -p "What is the show name? (default: $DEFAULT_SHOW_NAME): " SHOW_NAME
+if [[ -z $SHOW_NAME ]]; then
+    SHOW_NAME=$DEFAULT_SHOW_NAME
+# else
+#     SHOW_NAME=$SHOW_NAME
+fi
+
+echo "<!DOCTYPE html>
+<html lang=\"en-US\">
+    <head>
+        <title>$DISPLAY_NAME</title>
+        <link rel=\"stylesheet\" href=\"/CSS/shows.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+    </head>
+    <body>
+        <div id=\"HASH\" class=\"blue-msg\">
+        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+        <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+        </div>" > index.html
+
+
+read -p "How many seasons" SEASONS
+for SEASON in $(seq $SEASONS); do
+
+    echo "        <br>
+        <h1>$DISPLAY_NAME Season $SEASON</h1>
+        <p><a href=\"$SHOW""Season1/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
+
+    read -p "How many episodes are in season $SEASON?: " EPISODES
+    for EPISODE in $(seq $EPISODES); do
+        echo "        <div class=\"button-container tooltip\">
+        <h3><a href=\"stream_season$SEASON""_episode$EPISODE.html\" class=\"btn-square\">Episode $EPISODE</a></h3>
+	<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+        </div>" >> index.html
+    done
+done
+
+
+# <!DOCTYPE html>
+# <html lang=\"en-US\">
+#     <head>
+#         <title>$SHOW_PRETTY</title>
+#         <link rel=\"stylesheet\" href=\"/CSS/shows.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+#     </head>
+#     <body>
+#         <div id=\"HASH\" class=\"blue-msg\">
+#         <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+#         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+#         </div>
+
+#         <br>
+#         <h1>$SHOW_PRETTY Season 1</h1>
+#         <p><a href=\"$SHOWSeason1/\">$SHOW_PRETTY Season $SEASON Downloads</a></p>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode1.html\" class=\"btn-square\">Episode 1</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E1.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode2.html\" class=\"btn-square\">Episode 2</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E2.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode3.html\" class=\"btn-square\">Episode 3</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E3.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode4.html\" class=\"btn-square\">Episode 4</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E4.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode5.html\" class=\"btn-square\">Episode 5</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E5.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode6.html\" class=\"btn-square\">Episode 6</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E6.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode7.html\" class=\"btn-square\">Episode 7</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E7.jpeg\" alt=\"balls\"></span>
+#         </div>
+#         <div class=\"button-container tooltip\">
+#         <h3><a href=\"stream_season1_episode8.html\" class=\"btn-square\">Episode 8</a></h3>
+# 		<span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS1E8.jpeg\" alt=\"balls\"></span>
+#         </div>
+
+#     </body>
+# </html>

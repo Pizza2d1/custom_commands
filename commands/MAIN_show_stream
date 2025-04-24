@@ -47,6 +47,7 @@ for FILE in $(ls *.mp4); do
         NEXT_EPISODE_NUMBER="0$NEXT_EPISODE_NUMBER"
         PREVIOUS_EPISODE_NUMBE="0$PREVIOUS_EPISODE_NUMBER"
     fi
+    choosing=true
     
     re='^[0-9]+$' # All numbers between 0 and 9 to test number inputs
 
@@ -58,17 +59,16 @@ for FILE in $(ls *.mp4); do
 [#] Set episode for current file (default: $FILENUMBER)\n"
     
     read -p "Input: " uinput
-    while [[ $uinput == 'c' ]] || [[ $uinput == 'n' ]] && [[ $uinput != $re ]]; do
+    while [[ $uinput == 'c' ]] || [[ $uinput == 'n' ]] && [[ $uinput != $re ]] && $choosing; do
         if [[ $uinput == "c" ]]; then
             choosing=true
             while $choosing; do
                 read -p "What do you want to the new filename to be?: " NEW_FILENAME
                 read -p "Is this name correct, $NEW_FILENAME? [Y/n]: " uinput
                 if [[ ! $uinput == 'n' ]] || [[ ! $uinput == 'N' ]]; then
-                    choosing=true
+                    choosing=false
                     mv $FILE "$NEW_FILENAME"
                     FILE=$NEW_FILENAME
-                    read -p "Input: " uinput
                 fi
             done
         elif [[ $uinput == 'n' ]]; then
