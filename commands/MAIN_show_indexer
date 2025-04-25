@@ -128,8 +128,9 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
     done
 
     if [[ $UINPUT == 'A' ]]; then
+        echo "balls"
         for SEASON in $(seq $SEASONS); do
-        
+        echo "Balls"
             echo "<!DOCTYPE html>
 <html lang=\"en-US\">
     <head>
