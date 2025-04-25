@@ -128,9 +128,9 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
     done
 
     if [[ $UINPUT == 'A' ]]; then
-        echo "balls"
+        
         for SEASON in $(seq $SEASONS); do
-        echo "Balls"
+        
             echo "<!DOCTYPE html>
 <html lang=\"en-US\">
     <head>
@@ -154,6 +154,11 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
 
         <h3><u>MP4 Episode Downloads</u></h3>" > ./$SHOW""Season$SEASON/index.html
 
+            
+            NUMBER_OF_EPISODES=0
+            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/*.mp4); do
+                NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+            done
             for EPISODE in $(seq $NUMBER_OF_EPISODES); do
                 echo "        <div class=\"button-container tooltip\">
         <h3><a href=\"$SHOW""Season$SEASON""_MP4/S$SEASON""E$EPISODE.mp4\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
@@ -161,10 +166,13 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
         </div>" >> ./$SHOW""Season$SEASON/index.html 
             done
 
-
             echo "        <hr>
         <h3><u>MKV Episode Downloads</u></h3>" >> ./$SHOW""Season$SEASON/index.html
 
+            NUMBER_OF_EPISODES=0
+            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/*.mkv); do
+                NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+            done
             for EPISODE in $(seq $NUMBER_OF_EPISODES); do
                 echo "        <div class=\"button-container tooltip\">
         <h3><a href=\"$SHOW""Season$SEASON""_MKV/S$SEASON""E$EPISODE.mkv\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
