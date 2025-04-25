@@ -75,9 +75,9 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
     SHOW=$(basename $(pwd) | sed 's/Season.*//i')
     DISPLAY_NAME=$(echo $SHOW | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
     SEASONS=0
-    # for SEASON_DIRS in $(ls ./*Season*);
-    #     SEASONS=$((SEASONS+=1))
-    # done
+    for SEASON_DIRS in $(ls ./*Season*); do
+        SEASONS=$((SEASONS+=1))
+    done
 
     echo "SHOW: $SHOW"
     echo "DISPLAY_NAME: $DISPLAY_NAME"
