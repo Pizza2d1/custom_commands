@@ -163,7 +163,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
             for EPISODE in $(seq $NUMBER_OF_EPISODES); do
                 echo "        <div class=\"button-container tooltip\">
         <h3><a href=\"$SHOW""Season$SEASON""_MP4/S$SEASON""E$EPISODE.mp4\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
-        <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/.jpeg\" alt=\"balls\"></span>
+        <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
         </div>" >> ./$SHOW""Season$SEASON/index.html 
             done
 
