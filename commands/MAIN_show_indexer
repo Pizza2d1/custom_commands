@@ -15,7 +15,7 @@ if [[ $UINPUT == 's' ]] || [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
     if [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
 
 
-        DEFAULT_SHOW_NAME=$(basename $(pwd) | sed 's/Season.*//i')
+        SHOW=$(basename $(pwd) | sed 's/Season.*//i')
         DISPLAY_NAME=$(echo $SHOW | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
 
         # read -p "What is the directory name of the show? (default: $DEFAULT_SHOW_NAME): "
