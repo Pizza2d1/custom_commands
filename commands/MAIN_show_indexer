@@ -5,8 +5,8 @@ echo -e "
     
     [n] Proceed with normal program (default) 
     [s] Skip to season download indexes
-    [a] Automatically make show index (experimental)
-    [A] Automatically make all show indexes (experimental)"
+    [a] Automatically make show index
+    [A] Automatically make all show indexes"
 
 read -p "Option: " UINPUT
 
@@ -70,7 +70,61 @@ if [[ $UINPUT == 's' ]] || [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
         done
     fi
 
-    echo "Not added yet"
+    echo -e "\nNot done yet\n"
+#     for SEASON in $(seq $SEASONS); do
+        
+#         echo "<!DOCTYPE html>
+# <html lang=\"en-US\">
+#     <head>
+#         <title>$DISPLAY_NAME Season 1</title>
+#         <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/downloads.css\">
+#     </head>
+#     <body>
+#         <div id=\"HASH\" class=\"blue-msg\">
+#         <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+#         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+#         </div>
+#         <img src=\"/assets/$SHOW/title_image.png\" alt=\"Title page\" width=\"50%\">
+#         <h1>$DISPLAY_NAME Season $SEASON Downloads</h1>
+#         <h3>Full Season Compressed Folder Download:</h3>
+#         <p class=\"btn btn-mp4\"><a href=\"$SHOW""Season$SEASON""_MP4/$SHOW""Season$SEASON""_MP4.zip\" download>MP4 Format Season Download (lossy)</a></p>
+#         <br><br>
+#         <p class=\"btn btn-mkv\"><a href=\"$SHOW""Season$SEASON""_MKV/$SHOW""Season$SEASON""_MKV.zip\" download>MKV Format Season Download (lossless)</a></p>
+#         <hr>
+
+#         <h3><u>MP4 Episode Downloads</u></h3>" > index.html
+
+            
+#         NUMBER_OF_EPISODES=0
+#         for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MP4/*.mp4); do
+#             NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+#         done
+#         for EPISODE in $(seq $NUMBER_OF_EPISODES); do
+#             echo "        <div class=\"button-container tooltip\">
+#         <h3><a href=\"$SHOW""Season$SEASON""_MP4/S$SEASON""E$EPISODE.mp4\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
+#         <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+#         </div>" >> index.html 
+#         done
+
+#         echo "        <hr>
+#         <h3><u>MKV Episode Downloads</u></h3>" >> index.html
+
+#         NUMBER_OF_EPISODES=0
+#         for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MKV/*.mkv); do
+#             NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+#         done
+#         for EPISODE in $(seq $NUMBER_OF_EPISODES); do
+#             echo "        <div class=\"button-container tooltip\">
+#         <h3><a href=\"$SHOW""Season$SEASON""_MKV/S$SEASON""E$EPISODE.mkv\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
+#         <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/.jpeg\" alt=\"balls\"></span>
+#         </div>" >> index.html 
+#         done
+
+#         echo "    </body>
+# </html>" >> index.html 
+#     done
 
 elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
 
@@ -187,102 +241,3 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
         done
     fi
 fi
-
-
-
-
-
-# <!DOCTYPE html>
-# <html lang="en-US">
-#     <head>
-#         <title>Dr Stone Season 1</title>
-#         <link rel="stylesheet" href="/CSS/buttons.css">
-#         <link rel="stylesheet" href="/CSS/tooltips.css">
-#         <link rel="stylesheet" href="/CSS/downloads.css">
-#     </head>
-#     <body>
-#         <div id="HASH" class="blue-msg">
-#         <span id="time-HASH" class="smalltext btn-square"><a href="../index.html">BACK</a></span>
-#         <span class="ios-circle btn-square"><a href="/index.html">HOMEPAGE</a></span>
-#         </div>
-#         <img src="/assets/DrStone/title_image.png" alt="Title page" width="50%">
-        
-#         <h1>Dr Stone Season 1 Downloads</h1>
-#         <h3>Full Season Compressed Folder Download:</h3>
-#         <p class="btn btn-mp4"><a href="DrStoneSeason1_MP4/DrStoneSeason1_MP4.zip" download>MP4 Format Season Download (lossy)</a></p>
-#         <br><br>
-#         <p class="btn btn-mkv"><a href="DrStoneSeason1_MKV/DrStoneSeason1_MKV.zip" download>MKV Format Season Download (lossless)</a></p>
-#         <hr>
-
-#         <h3><u>MP4 Episode Downloads</u></h3>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E1.mp4" class="btn-square" download>Episode 1</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E2.mp4" class="btn-square" download>Episode 2</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E3.mp4" class="btn-square" download>Episode 3</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>        
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E4.mp4" class="btn-square" download>Episode 4</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>        
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E5.mp4" class="btn-square" download>Episode 5</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E6.mp4" class="btn-square" download>Episode 6</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E7.mp4" class="btn-square" download>Episode 7</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#        <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MP4/S2E8.mp4" class="btn-square" download>Episode 8</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-        
-#         <hr>
-
-#         <h3><u>MKV Episode Downloads</u></h3>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E1.mkv" class="btn-square" download>Episode 1</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E2.mkv" class="btn-square" download>Episode 2</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E3.mkv" class="btn-square" download>Episode 3</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>        
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E4.mkv" class="btn-square" download>Episode 4</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>        
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E5.mkv" class="btn-square" download>Episode 5</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E6.mkv" class="btn-square" download>Episode 6</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#         <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E7.mkv" class="btn-square" download>Episode 7</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-#        <div class="button-container tooltip">
-#         <h3><a href="DrStoneSeason1_MKV/S2E8.mkv" class="btn-square" download>Episode 8</a></h3>
-#         <span class="tooltiptext">ep title<img src="/assets/DrStone/.jpg" alt="balls"></span>
-#         </div>
-
-#     </body>
-# </html>
