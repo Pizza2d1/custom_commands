@@ -82,6 +82,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
 
     echo "SHOW: $SHOW"
     echo "DISPLAY_NAME: $DISPLAY_NAME"
+    echo "SEASONS AMOUNT: $SEASONS"
 
     echo "<!DOCTYPE html>
     <html lang=\"en-US\">
