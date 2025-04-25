@@ -105,7 +105,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
             <p><a href=\"$SHOW""Season$SEASON/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
 
         EPISODES=0
-        for SEASON_DIRS in $(ls ./$SHOW""Season$SEASON/*.mp4); do
+        for SEASON_DIRS in $(ls ./$SHOW""Season$SEASON/$SHOW*.mp4); do
             EPISODES=$((EPISODES+=1))
             echo "SEASON_DIRS: $SEASON_DIRS"
         done
@@ -157,7 +157,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
 
             
             NUMBER_OF_EPISODES=0
-            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/*.mp4); do
+            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MP4/*.mp4); do
                 NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
             done
             for EPISODE in $(seq $NUMBER_OF_EPISODES); do
@@ -171,7 +171,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
         <h3><u>MKV Episode Downloads</u></h3>" >> ./$SHOW""Season$SEASON/index.html
 
             NUMBER_OF_EPISODES=0
-            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/*.mkv); do
+            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MKV/*.mkv); do
                 NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
             done
             for EPISODE in $(seq $NUMBER_OF_EPISODES); do
