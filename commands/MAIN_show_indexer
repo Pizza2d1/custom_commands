@@ -76,7 +76,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
     DISPLAY_NAME=$(echo $SHOW | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
     SEASONS=0
     for SEASON_DIRS in $(ls ./*Season*);
-        ((SEASONS+=1))
+        SEASONS=$((SEASONS+=1))
     done
 
     echo "SHOW: $SHOW"
