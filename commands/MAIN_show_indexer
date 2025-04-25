@@ -105,7 +105,7 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
             <p><a href=\"$SHOW""Season$SEASON/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
 
         EPISODES=0
-        for SEASON_DIRS in $(ls ./$SHOW""Season$SEASON/*.mp4); do
+        for SEASON_DIRS in $(ls ./*Season$SEASON/*.mp4); do
             EPISODES=$((EPISODES+=1))
         done
         # read -p "Do you want to include episode titles? [y/N]: " TITLE_CHOICE
