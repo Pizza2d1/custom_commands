@@ -69,6 +69,7 @@ if [[ $UINPUT == 's' ]] || [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
         done
     fi
 
+    echo "Not added yet"
 
 elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
 
@@ -102,8 +103,11 @@ elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
             <h1>$DISPLAY_NAME Season $SEASON</h1>
             <p><a href=\"$SHOW""Season$SEASON/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
 
-        read -p "How many episodes are in season $SEASON?: " EPISODES
-        read -p "Do you want to include episode titles? [y/N]: " TITLE_CHOICE
+        EPISODES=0
+        for SEASON_DIRS in $(ls ./*Season$SEASON*); do
+            EPISODES=$((EPISODES+=1))
+        done
+        # read -p "Do you want to include episode titles? [y/N]: " TITLE_CHOICE
         if [[ $TITLE_CHOICE == "y" ]] || [[ $TITLE_CHOICE == "Y" ]]; then
             for EPISODE in $(seq $EPISODES); do
                 read -p "Episode $EPISODE title: " EPISODE_TITLE 
