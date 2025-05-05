@@ -1,0 +1,243 @@
+#!/bin/bash
+
+echo -e "
+    Show Index Maker
+    
+    [n] Proceed with normal program (default) 
+    [s] Skip to season download indexes
+    [a] Automatically make show index
+    [A] Automatically make all show indexes"
+
+read -p "Option: " UINPUT
+
+
+if [[ $UINPUT == 's' ]] || [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
+    if [[ $UINPUT == 'n' ]] || [[ -z $UINPUT ]]; then
+
+
+        SHOW=$(basename $(pwd) | sed 's/Season.*//i')
+        DISPLAY_NAME=$(echo $SHOW | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
+
+        # read -p "What is the directory name of the show? (default: $DEFAULT_SHOW_NAME): "
+        # read -p "What is the show's directory name? (default: $DISPLAY_NAME): " SHOW
+        # if [[ -z $SHOW ]]; then
+        #     SHOW=$DEFAULT_SHOW_NAME
+        # fi
+        read -p "What is the show name? (default: $DISPLAY_NAME): " SHOW_NAME
+        if [[ ! -z $SHOW_NAME ]]; then
+            DISPLAY_NAME=$SHOW_NAME
+        fi
+        echo "<!DOCTYPE html>
+        <html lang=\"en-US\">
+            <head>
+                <title>$DISPLAY_NAME</title>
+                <link rel=\"stylesheet\" href=\"/CSS/shows.css\">
+                <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+                <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+            </head>
+            <body>
+                <div id=\"HASH\" class=\"blue-msg\">
+                <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+                <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+                </div>" > index.html
+
+
+        read -p "How many seasons" SEASONS
+        for SEASON in $(seq $SEASONS); do
+
+            echo "        <br>
+                <h1>$DISPLAY_NAME Season $SEASON</h1>
+                <p><a href=\"$SHOW""Season$SEASON/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
+
+            read -p "How many episodes are in season $SEASON?: " EPISODES
+            read -p "Do you want to include episode titles? [y/N]: " TITLE_CHOICE
+            if [[ $TITLE_CHOICE == "y" ]] || [[ $TITLE_CHOICE == "Y" ]]; then
+                for EPISODE in $(seq $EPISODES); do
+                    read -p "Episode $EPISODE title: " EPISODE_TITLE 
+                    echo "        <div class=\"button-container tooltip\">
+                    <h3><a href=\"stream_season$SEASON""_episode$EPISODE.html\" class=\"btn-square\">Episode $EPISODE</a></h3>
+                <span class=\"tooltiptext\">$EPISODE_TITLE<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+                    </div>" >> index.html
+                done
+            else
+                for EPISODE in $(seq $EPISODES); do
+                    echo "        <div class=\"button-container tooltip\">
+                    <h3><a href=\"stream_season$SEASON""_episode$EPISODE.html\" class=\"btn-square\">Episode $EPISODE</a></h3>
+                <span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+                    </div>" >> index.html
+                done
+            fi
+        done
+    fi
+
+    echo -e "\nNot done yet\n"
+#     for SEASON in $(seq $SEASONS); do
+        
+#         echo "<!DOCTYPE html>
+# <html lang=\"en-US\">
+#     <head>
+#         <title>$DISPLAY_NAME Season 1</title>
+#         <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+#         <link rel=\"stylesheet\" href=\"/CSS/downloads.css\">
+#     </head>
+#     <body>
+#         <div id=\"HASH\" class=\"blue-msg\">
+#         <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+#         <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+#         </div>
+#         <img src=\"/assets/$SHOW/title_image.png\" alt=\"Title page\" width=\"50%\">
+#         <h1>$DISPLAY_NAME Season $SEASON Downloads</h1>
+#         <h3>Full Season Compressed Folder Download:</h3>
+#         <p class=\"btn btn-mp4\"><a href=\"$SHOW""Season$SEASON""_MP4/$SHOW""Season$SEASON""_MP4.zip\" download>MP4 Format Season Download (lossy)</a></p>
+#         <br><br>
+#         <p class=\"btn btn-mkv\"><a href=\"$SHOW""Season$SEASON""_MKV/$SHOW""Season$SEASON""_MKV.zip\" download>MKV Format Season Download (lossless)</a></p>
+#         <hr>
+
+#         <h3><u>MP4 Episode Downloads</u></h3>" > index.html
+
+            
+#         NUMBER_OF_EPISODES=0
+#         for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MP4/*.mp4); do
+#             NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+#         done
+#         for EPISODE in $(seq $NUMBER_OF_EPISODES); do
+#             echo "        <div class=\"button-container tooltip\">
+#         <h3><a href=\"$SHOW""Season$SEASON""_MP4/S$SEASON""E$EPISODE.mp4\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
+#         <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+#         </div>" >> index.html 
+#         done
+
+#         echo "        <hr>
+#         <h3><u>MKV Episode Downloads</u></h3>" >> index.html
+
+#         NUMBER_OF_EPISODES=0
+#         for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MKV/*.mkv); do
+#             NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+#         done
+#         for EPISODE in $(seq $NUMBER_OF_EPISODES); do
+#             echo "        <div class=\"button-container tooltip\">
+#         <h3><a href=\"$SHOW""Season$SEASON""_MKV/S$SEASON""E$EPISODE.mkv\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
+#         <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/.jpeg\" alt=\"balls\"></span>
+#         </div>" >> index.html 
+#         done
+
+#         echo "    </body>
+# </html>" >> index.html 
+#     done
+
+elif [[ $UINPUT == 'a' ]] || [[ $UINPUT == 'A' ]]; then
+
+    SHOW=$(basename $(pwd) | sed 's/Season.*//i')
+    DISPLAY_NAME=$(echo $SHOW | sed -E 's/([a-z])([A-Z])/\1 \2/g' | sed -E 's/([a-z])([1-99])/\1 \2 /g' | sed -E 's/([1-9])([A-Z])/\1 \2/g')
+    SEASONS=0
+    for SEASON_DIRS in $(ls -d */ | sed 's/\///'); do
+        SEASONS=$((SEASONS+=1))
+    done
+
+    echo "SHOW: $SHOW"
+    echo "DISPLAY_NAME: $DISPLAY_NAME"
+    echo "SEASONS AMOUNT: $SEASONS"
+
+    echo "<!DOCTYPE html>
+    <html lang=\"en-US\">
+        <head>
+            <title>$DISPLAY_NAME</title>
+            <link rel=\"stylesheet\" href=\"/CSS/shows.css\">
+            <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+            <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+        </head>
+        <body>
+            <div id=\"HASH\" class=\"blue-msg\">
+            <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+            <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+            </div>" > index.html
+
+    for SEASON in $(seq $SEASONS); do
+
+        echo "        <br>
+            <h1>$DISPLAY_NAME Season $SEASON</h1>
+            <p><a href=\"$SHOW""Season$SEASON/\">$DISPLAY_NAME Season $SEASON Downloads</a></p>" >> index.html
+
+        EPISODES=0
+        for SEASON_DIRS in $(ls ./$SHOW""Season$SEASON/$SHOW*.mp4); do
+            EPISODES=$((EPISODES+=1))
+            echo "SEASON_DIRS: $SEASON_DIRS"
+        done
+        # read -p "Do you want to include episode titles? [y/N]: " TITLE_CHOICE
+        if [[ $TITLE_CHOICE == "y" ]] || [[ $TITLE_CHOICE == "Y" ]]; then
+            for EPISODE in $(seq $EPISODES); do
+                read -p "Episode $EPISODE title: " EPISODE_TITLE 
+                echo "        <div class=\"button-container tooltip\">
+                <h3><a href=\"stream_season$SEASON""_episode$EPISODE.html\" class=\"btn-square\">Episode $EPISODE</a></h3>
+            <span class=\"tooltiptext\">$EPISODE_TITLE<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+                </div>" >> index.html
+            done
+        else
+            for EPISODE in $(seq $EPISODES); do
+                echo "        <div class=\"button-container tooltip\">
+                <h3><a href=\"stream_season$SEASON""_episode$EPISODE.html\" class=\"btn-square\">Episode $EPISODE</a></h3>
+            <span class=\"tooltiptext\"><img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+                </div>" >> index.html
+            done
+        fi
+    done
+
+    if [[ $UINPUT == 'A' ]]; then
+        
+        for SEASON in $(seq $SEASONS); do
+        
+            echo "<!DOCTYPE html>
+<html lang=\"en-US\">
+    <head>
+        <title>$DISPLAY_NAME Season 1</title>
+        <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/tooltips.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/downloads.css\">
+    </head>
+    <body>
+        <div id=\"HASH\" class=\"blue-msg\">
+        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"../index.html\">BACK</a></span>
+        <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+        </div>
+        <img src=\"/assets/$SHOW/title_image.png\" alt=\"Title page\" width=\"50%\">
+        <h1>$DISPLAY_NAME Season $SEASON Downloads</h1>
+        <h3>Full Season Compressed Folder Download:</h3>
+        <p class=\"btn btn-mp4\"><a href=\"$SHOW""Season$SEASON""_MP4/$SHOW""Season$SEASON""_MP4.zip\" download>MP4 Format Season Download (lossy)</a></p>
+        <br><br>
+        <p class=\"btn btn-mkv\"><a href=\"$SHOW""Season$SEASON""_MKV/$SHOW""Season$SEASON""_MKV.zip\" download>MKV Format Season Download (lossless)</a></p>
+        <hr>
+
+        <h3><u>MP4 Episode Downloads</u></h3>" > ./$SHOW""Season$SEASON/index.html
+
+            
+            NUMBER_OF_EPISODES=0
+            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MP4/*.mp4); do
+                NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+            done
+            for EPISODE in $(seq $NUMBER_OF_EPISODES); do
+                echo "        <div class=\"button-container tooltip\">
+        <h3><a href=\"$SHOW""Season$SEASON""_MP4/S$SEASON""E$EPISODE.mp4\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
+        <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/coverS$SEASON""E$EPISODE.jpeg\" alt=\"balls\"></span>
+        </div>" >> ./$SHOW""Season$SEASON/index.html 
+            done
+
+            echo "        <hr>
+        <h3><u>MKV Episode Downloads</u></h3>" >> ./$SHOW""Season$SEASON/index.html
+
+            NUMBER_OF_EPISODES=0
+            for SEASON_DIRS in $(ls $SHOW""Season$SEASON/$SHOW""Season$SEASON""_MKV/*.mkv); do
+                NUMBER_OF_EPISODES=$((NUMBER_OF_EPISODES+=1))
+            done
+            for EPISODE in $(seq $NUMBER_OF_EPISODES); do
+                echo "        <div class=\"button-container tooltip\">
+        <h3><a href=\"$SHOW""Season$SEASON""_MKV/S$SEASON""E$EPISODE.mkv\" class=\"btn-square\" download>Episode $EPISODE</a></h3>
+        <span class=\"tooltiptext\">ep title<img src=\"/assets/$SHOW/.jpeg\" alt=\"balls\"></span>
+        </div>" >> ./$SHOW""Season$SEASON/index.html 
+            done
+
+            echo "    </body>
+</html>" >> ./$SHOW""Season$SEASON/index.html 
+        done
+    fi
+fi

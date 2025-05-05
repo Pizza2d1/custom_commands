@@ -1,0 +1,129 @@
+#!/bin/bash
+
+# if [[ -z $1 ]]; then
+#     echo "You can make this go a lot faster by providing a season as a parameter as: make_stream_html [SEASON NUMBER]"
+#     read -p "Do you want to continue? [Y/n]: " uinput
+#     if [[ ! -z $uinput ]] || [[ ! $uinput == "y" ]] || [[ ! $uinput == "Y" ]]; then
+#         exit;
+#     fi
+# fi
+
+DEFAULT_SHOW_NAME=$(basename $(pwd) | sed 's/Season.*//i')
+
+read -p "What is the show name? (default: $DEFAULT_SHOW_NAME): " SHOW_NAME              # Prompt for show name that will be displayed on the webpage
+# read -p "How many episodes (.mp4 files) are in this directory?: " NUMBER_OF_EPISODES
+# read -p "What season is it?: " SEASON_NUMBER
+
+# for x in $(seq $NUMBER_OF_EPISODES); do
+#     touch ./stream_season$SEASON_NUMBER\_episode$x
+# done
+
+if [[ -z $SHOW_NAME ]]; then
+    SHOW_NAME=$DEFAULT_SHOW_NAME
+fi
+if [[ ! -z $1 ]]; then
+    SEASON_NUMBER=$1
+else
+    SEASON_NUMBER=1
+fi
+
+for FILE in $(ls *.mp4); do
+    ## GET FILE DATA ##
+    FILENAME=$(echo "\"$(basename "$FILE")\"")
+    # echo "FILENAME: $FILENAME"
+    FILELOCATION=$(echo $FILENAME | sed 's/\.mp4//')
+    FILELOCATION=${FILELOCATION:1:-1} # You need to cut off the quotation marks that sed give this string
+    # echo "FILELOCATION $FILELOCATION"
+    FILENUMBER=$(echo "\"$(basename "$FILE")\"" | sed 's/^.*E//' | sed 's/\.mp4//' | sed 's/[^0-9]//g')
+    if [[ ${FILENUMBER:0:1} == "0" ]]; then
+        FILENUMBER=${FILENUMBER:1}
+    fi
+    echo "FILENUMBER $FILENUMBER"
+    NEXT_EPISODE_NUMBER=$(($FILENUMBER+1))
+    # echo "NEXT EPISODE NUMBER $NEXT_EPISODE_NUMBER"
+    PREVIOUS_EPISODE_NUMBER=$(($FILENUMBER-1))
+    # echo "PREVIOUS EPISODE NUMBER: $PREVIOUS_EPISODE_NUMBER"
+    if [[ ${FILENUMBER:0:1} == "0" ]]; then
+        NEXT_EPISODE_NUMBER="0$NEXT_EPISODE_NUMBER"
+        PREVIOUS_EPISODE_NUMBE="0$PREVIOUS_EPISODE_NUMBER"
+    fi
+    choosing=true
+    
+    re='^[0-9]+$' # All numbers between 0 and 9 to test number inputs
+
+    echo -e "\nCurrent Season: $SEASON_NUMBER\nVideo File Name: $FILE"
+    echo -e "
+[c] Change File Name
+[n] New season
+[s] Skip file
+[#] Set episode for current file (default: $FILENUMBER)\n"
+    
+    read -p "Input: " uinput
+    while [[ $uinput == 'c' ]] || [[ $uinput == 'n' ]] && [[ $uinput != $re ]] && $choosing; do
+        if [[ $uinput == "c" ]]; then
+            choosing=true
+            while $choosing; do
+                read -p "What do you want to the new filename to be?: " NEW_FILENAME
+                read -p "Is this name correct, $NEW_FILENAME? [Y/n]: " uinput
+                if [[ ! $uinput == 'n' ]] || [[ ! $uinput == 'N' ]]; then
+                    choosing=false
+                    mv $FILE "$NEW_FILENAME"
+                    FILE=$NEW_FILENAME
+                fi
+            done
+        elif [[ $uinput == 'n' ]]; then
+            read -p "What is the new season number?: " NEW_SEASON_NUMBER
+            SEASON_NUMBER=$NEW_SEASON_NUMBER
+        elif [[ $uinput == 's' ]]; then
+            uinput=69420
+            continue
+        fi
+        echo -e "\nCurrent Season: $SEASON_NUMBER\nVideo File Name: $FILE"
+        echo -e "
+[c] Change File Name
+[n] New season
+[s] Skip file
+[#] Set episode for current file (default: $FILENUMBER)\n"
+        read -p "Input: " uinput
+    done
+
+    if [[ $uinput == 's' ]]; then
+        continue
+    fi
+
+    if [[ -z $uinput ]]; then
+        EPISODE_NUMBER=$FILENUMBER  
+    else
+        EPISODE_NUMBER=$uinput
+    fi
+
+    echo -e "<!DOCTYPE html>   
+<html lang="en-US">
+    <head>
+        <title>
+            $SHOW_NAME $SEASON_NUMBER:$EPISODE_NUMBER
+        </title>
+        <link rel=\"stylesheet\" href=\"/CSS/buttons.css\">
+        <link rel=\"stylesheet\" href=\"/CSS/stream.css\">
+    </head>
+    <body>
+        <div id=\"HASH\" class=\"blue-msg\">
+        <span id=\"time-HASH\" class=\"smalltext btn-square\"><a href=\"./index.html\">BACK</a></span>
+        <span class=\"ios-circle btn-square\"><a href=\"/index.html\">HOMEPAGE</a></span>
+        </div>
+        <hr>
+        <h3>$SHOW_NAME Season $SEASON_NUMBER Episode $EPISODE_NUMBER</h3>
+        <video width=\"720\" height=\"480\" controls preload=\"auto\">
+            <source src=\"$FILELOCATION.mp4\" type=\"video/mp4\">
+        </video>
+        <br>" > stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+    if [[ $PREVIOUS_EPISODE_NUMBER != "0" ]]; then
+        echo -e "
+            <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$PREVIOUS_EPISODE_NUMBER.html\">Previous Episode</a></h2>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+    fi
+    echo -e "
+            <h2 class=\"btn-square\"><a href=\"stream_season$SEASON_NUMBER""_episode$NEXT_EPISODE_NUMBER.html\">Next Episode</a></h2>
+            <h2 class=\"btn-square\"><a href=\"$FILELOCATION.mp4\" download>Download this episode</a></h2>
+    </body>
+</html>" >> stream_season$SEASON_NUMBER""_episode$EPISODE_NUMBER.html
+done
