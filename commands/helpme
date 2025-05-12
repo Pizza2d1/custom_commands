@@ -1,0 +1,50 @@
+#!/bin/bash
+
+user=$(whoami)
+
+
+case $1 in
+  --add)
+    echo "Balls"
+    exit;;
+esac
+
+
+
+
+case "$(pwd)" in
+  "/home/$user/HomeProgramming/webpage_making/flask")
+    echo """
+    Start environment in /home/$user/HomeProgramming/webpage_making/flask:
+        . .venv/bin/activate
+      
+    Start flask server:
+        python3 -m flask --app [FILE_NAME].py run --debug
+        e.g. python3 -m flask --app my_app.py run --debug
+        """
+    exit;;
+  \?)                   #Does something, I don't know what, but if I remove it then it breaks so I'll keep it around)
+      echo "Invalid option"
+      exit;;
+  --)					            #No idea whatsoever, I don't want to remove it though)
+      echo "nothing"
+      shift
+      break
+      ;;
+esac
+
+echo -e "\nNo guide for this directory/subdirectory"
+
+# echo -e "If you would like to add a guide use:\n\n  helpme --add\n"
+
+
+# if [[ $(pwd) == *"/home/$user/HomeProgramming/webpage_making/flask"* ]]; then 
+#   echo """
+#   Start environment in /home/$user/HomeProgramming/webpage_making/flask:
+#       . .venv/bin/activate
+      
+#   Start flask server:
+#       python3 -m flask --app [FILE_NAME].py run --debug
+#       e.g. python3 -m flask --app my_app.py run --debug
+#       """
+# fi
